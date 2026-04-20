@@ -1,0 +1,17 @@
+The game will have a "party" of adventurers trying to clear ...
+Each adventurer will have a "discipline" (wizard, knight, etc)
+    Character is an instance of their discipline
+Each adventurer will be one of a set of races (elf, dwarf, etc)
+    Character implements this
+Each adventurer will also have a common set of stats
+    Health
+    Mana
+    (?) Experience (leveling up)
+    Strength
+    Speed\
+As the party faces different monsters (clearing "rooms")
+    they will take turns performing actions:
+    Attack (swing sword, fireball, throw knife)
+    Heal
+    Dodge
+
