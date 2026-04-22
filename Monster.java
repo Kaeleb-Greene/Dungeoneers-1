@@ -1,10 +1,10 @@
 import java.io.File;
 import java.util.Scanner;
 
-public abstract class Monster extends Entity{
+public class Monster extends Entity{
     private String type;
 
-Monster(String name, int dmg, int hp, String type){
+public Monster(String name, int dmg, int hp, String type){
     super(name, hp, dmg);
     this.type = type;
 }

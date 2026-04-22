@@ -1,3 +1,7 @@
+/*
+
+Do we even want this? We have the entity class.
+
 //An adventurer class, for adventurers!
 //""Vizzerdrix the elf wizard"
 // "Gorb the dwarf knight"
@@ -35,3 +39,4 @@ private void setDiscipline(Discipline Discipline){
 }
 
 }
+*/

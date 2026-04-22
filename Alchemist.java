@@ -1,6 +1,6 @@
 public class Alchemist extends Player {
     
-    Alchemist(int hp, int dmg, String name, int heal, String subClass, boolean isDefending){
+    public Alchemist(int hp, int dmg, String name, int heal, String subClass, boolean isDefending){
         super(name, hp, dmg, heal, subClass, isDefending);
     }
 

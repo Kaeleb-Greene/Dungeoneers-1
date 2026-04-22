@@ -3,7 +3,7 @@ public abstract class Entity {
     private int hp;
     private int dmg;
 
-    Entity(String name, int hp, int dmg){
+    public Entity(String name, int hp, int dmg){
         this.name = name;
         this.hp = hp;
         this.dmg = dmg;
