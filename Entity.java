@@ -18,6 +18,7 @@ public abstract class Entity {
     public String getName(){ return name; }
     public void setName(String name){ this.name = name; }
 
-    public takeDmg()
-
+    public void takeDmg(){
+        setHp(getHp() - getDmg());
+    }
 }

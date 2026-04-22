@@ -31,11 +31,11 @@ public void setType(String type){ this.type = type; }
 
 //add to main
 public int takeAction(){
-    if (type = Megaknight){
+    if (type == "Megaknight"){
         return splashAttack();
-    } else if(type = Dragon){
+    } else if(type == "Dragon"){
         return poisonAttack();
-    } else if(type = Goblin){
+    } else if(type == "Goblin"){
         return poisonAttack();
     } else {
         return normalAttack();
