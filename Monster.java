@@ -57,4 +57,9 @@ public int poisonAttack(){
     return super.getDmg();
 }
 
+public boolean isMonster(){
+    // confirms that they are, indeed, a monster.
+    return true;
+}
+
 }

@@ -1,6 +1,6 @@
 /*
 
-Do we even want this? We have the entity class.
+Do we even want this? We have the entity/player class.
 
 //An adventurer class, for adventurers!
 //""Vizzerdrix the elf wizard"

@@ -21,4 +21,6 @@ public abstract class Entity {
     public void takeDmg(){
         setHp(getHp() - getDmg());
     }
+
+    public abstract boolean isMonster();
 }
