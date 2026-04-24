@@ -1,6 +1,6 @@
 public class Cleric extends Player {
     
-    Cleric(int hp, int dmg, String name, int heal, String subClass, boolean isDefending){
+    public Cleric(int hp, int dmg, String name, int heal, String subClass, boolean isDefending){
         super(name, hp, dmg, heal, subClass, isDefending);
     }
 

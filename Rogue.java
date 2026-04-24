@@ -1,6 +1,6 @@
 public class Rogue extends Player {
     
-    Rogue(int hp, int dmg, String name, int heal, String subClass, boolean isDefending){
+    public Rogue(int hp, int dmg, String name, int heal, String subClass, boolean isDefending){
         super(name, hp, dmg, heal, subClass, isDefending);
     }
 

@@ -1,10 +1,10 @@
 import java.io.File;
 import java.util.Scanner;
 
-public abstract class Monster extends Entity{
+public class Monster extends Entity{
     private String type;
 
-Monster(String name, int dmg, int hp, String type){
+public Monster(String name, int dmg, int hp, String type){
     super(name, hp, dmg);
     this.type = type;
 }
@@ -55,6 +55,11 @@ public int splashAttack(){
 public int poisonAttack(){
     //returns dmg then do 1 additional dmg every turn for the next 3 turns
     return super.getDmg();
+}
+
+public boolean isMonster(){
+    // confirms that they are, indeed, a monster.
+    return true;
 }
 
 }
