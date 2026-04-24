@@ -1,7 +1,7 @@
 public class Alchemist extends Player {
     
-    Alchemist(int hp, int dmg, String name, int heal, String subClass, boolean isDefending){
-        super(name, hp, dmg, heal, subClass, isDefending);
+    public Alchemist(int hp, int dmg, String name, int heal, String subClass, boolean isDefending, boolean isPoisoned){
+        super(name, hp, dmg, heal, subClass, isDefending, isPoisoned);
     }
 
     public void Action1(){

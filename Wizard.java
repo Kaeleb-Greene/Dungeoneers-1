@@ -1,18 +1,14 @@
 public class Wizard extends Player {
     
-    Wizard(int hp, int dmg, String name, int heal, String subClass, boolean isDefending){
-        super(name, hp, dmg, heal, subClass, isDefending);
+    public Wizard(int hp, int dmg, String name, int heal, String subClass, boolean isDefending, boolean isPoisoned){
+        super(name, hp, dmg, heal, subClass, isDefending, isPoisoned);
     }
 
     public void Action1(){
-        return Entity.getDmg();
+        
     }
 
     public void Action2(){
-
-    }
-
-    public void Action3(){
 
     }
 
