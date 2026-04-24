@@ -5,7 +5,7 @@ public class Wizard extends Player {
     }
 
     public void Action1(){
-        
+
     }
 
     public void Action2(){

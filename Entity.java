@@ -43,4 +43,6 @@ public abstract class Entity {
         setIsPoisoned(true);
         return getDmg();
     }
+
+    public abstract boolean isMonster();
 }

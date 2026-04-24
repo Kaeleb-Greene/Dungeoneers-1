@@ -26,4 +26,8 @@ public Player(String name, int hp, int dmg, int heal, String subClass, boolean i
         setHp(getHp() - getDmg());
         }
     }
+
+    public boolean isMonster(){
+        // confirms that the player is not a monster and should be distinct from monsters.
+    }
 }
