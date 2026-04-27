@@ -28,6 +28,7 @@ public abstract class Player extends Entity {
     }
 
     public boolean isMonster(){
-        // confirms that the player is not a monster and should be distinct from monsters.
+        // the player is not a monster.
+        return false;
     }
 }
