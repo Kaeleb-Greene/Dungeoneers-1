@@ -2,11 +2,13 @@ public abstract class Entity {
     private String name;
     private int hp;
     private int dmg;
+    private boolean isPoisoned;
 
-    public Entity(String name, int hp, int dmg){
+    public Entity(String name, int hp, int dmg, boolean isPoisoned){
         this.name = name;
         this.hp = hp;
         this.dmg = dmg;
+        this.isPoisoned = false;
     }
 
     public int getDmg(){ return dmg; }
@@ -18,8 +20,28 @@ public abstract class Entity {
     public String getName(){ return name; }
     public void setName(String name){ this.name = name; }
 
+    public Boolean getIsPoisoned(){ return isPoisoned; }
+    public void setIsPoisoned(boolean isPoisoned){ this.isPoisoned = isPoisoned; }
+
+
     public void takeDmg(){
-        setHp(getHp() - getDmg());
+        setHp(getHp() - int Dmg);
+    }
+
+        //Attack types
+    public int normalAttack(){
+        return getDmg();
+    }
+
+    public int splashAttack(){
+        //returns dmg but applies dmg to all whole Player arraylist
+        return getDmg();
+    }
+
+    public int poisonAttack(){
+        //returns dmg then do 1 additional dmg every turn for the next 3 turns
+        setIsPoisoned(true);
+        return getDmg();
     }
 
     public abstract boolean isMonster();

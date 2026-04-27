@@ -4,41 +4,24 @@ import java.util.Scanner;
 public class Monster extends Entity{
     private String type;
 
-public Monster(String name, int dmg, int hp, String type){
-    super(name, hp, dmg);
+public Monster(String name, int dmg, int hp, String type, boolean isPoisoned){
+    super(name, hp, dmg, false);
     this.type = type;
 }
 
 public String getType(){ return type; }
 public void setType(String type){ this.type = type; }
 
-    public String getMonsterName(){
-        Scanner kb = null;
-        try {
-            int randNum = (int)(80*Math.random());
-            kb = new Scanner(new File("MonsterNames.txt"));
-            for(int i=0;i<randNum;i++){
-                kb.nextLine();
-            }
-            return kb.nextLine() + " the " + type;
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-            return "";
-        } finally{
-            kb.close();
-        }
-    }
-
 //add to main
 public int takeAction(){
     if (type == "Megaknight"){
-        return splashAttack();
+        return this.splashAttack();
     } else if(type == "Dragon"){
-        return poisonAttack();
+        return this.poisonAttack();
     } else if(type == "Goblin"){
-        return poisonAttack();
+        return this.poisonAttack();
     } else {
-        return normalAttack();
+        return this.normalAttack();
     }
 }
 
@@ -61,5 +44,4 @@ public boolean isMonster(){
     // confirms that they are, indeed, a monster.
     return true;
 }
-
 }

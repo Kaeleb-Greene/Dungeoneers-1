@@ -1,8 +1,7 @@
 public class Knight extends Player{
 
-    public Knight(int hp, int dmg, String name, int heal, String subClass, boolean isDefending){
-        super(name, hp, dmg, heal, subClass, isDefending);
-    }
+    public Knight(int hp, int dmg, String name, int heal, String subClass, boolean isDefending, boolean isPoisoned){
+        super(name, hp, dmg, heal, subClass, isDefending, isPoisoned);
     
     public void Action1(){
 
