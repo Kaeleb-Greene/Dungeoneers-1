@@ -24,8 +24,8 @@ public abstract class Entity {
     public void setIsPoisoned(boolean isPoisoned){ this.isPoisoned = isPoisoned; }
 
 
-    public void takeDmg(){
-        setHp(getHp() - int Dmg);
+    public void takeDmg(int dmg){
+        setHp(getHp() - dmg);
     }
 
         //Attack types

@@ -267,11 +267,9 @@ public class MainAdventure {
     }
 
 
-    public int poisonCheck(Entity Entity){
+    public void poisonCheck(Entity Entity){
         if(Entity.getIsPoisoned() == true){
-            Entity.takeDmg();
-        } else {
-            return
+            Entity.takeDmg(1);
         }
         //checks each turn if player/monster isPoisoned = true, if true deals 1 dmg.
     } 
