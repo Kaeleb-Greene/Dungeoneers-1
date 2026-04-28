@@ -23,7 +23,6 @@ public abstract class Entity {
     public Boolean getIsPoisoned(){ return isPoisoned; }
     public void setIsPoisoned(boolean isPoisoned){ this.isPoisoned = isPoisoned; }
 
-
     public void takeDmg(){
         setHp(getHp() - getDmg());
     }

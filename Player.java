@@ -29,6 +29,7 @@ public Player(String name, int hp, int dmg, int heal, String subClass, boolean i
     }
 
     public boolean isMonster(){
+        // the player is not a monster.
         return false;
     }
 }

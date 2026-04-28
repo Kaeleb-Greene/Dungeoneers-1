@@ -51,7 +51,6 @@ public class MainAdventure {
         ArrayList<Monster> monsters = new ArrayList<Monster>(3);
         double randNum = Math.random();
         if(level == 1){
-<<<<<<< HEAD
             monsters.add(Monster("placeholder",4,2,"Skeleton", false));
             monsters.add(Monster("placeholder",4,2,"Skeleton", false));
             monsters.add(Monster("placeholder",4,2,"Skeleton", false));
@@ -170,9 +169,6 @@ public class MainAdventure {
         }
         return monsters;
     }
-    if (gameLost){
-        System.out.println("GAME OVER! Better luck next time!");
-    }
 
     // This linear cipher has a decimation of 7 and a shift of 18
     public static String linearCipher(String s, boolean encoding){
@@ -232,7 +228,24 @@ public class MainAdventure {
             total += (char)finalNum;
         }
         return total;
->>>>>>> cf12cc43e61030be2e4f7ebc88e647610fd15ea4
+    }
+
+    public static void computerAction(Monster m){
+        int damage = m.takeAction();
+        if(m.getType().equals("Megaknight")){
+            party.get(0).takeDamage(damage);
+            party.get(1).takeDamage(damage);
+            party.get(2).takeDamage(damage);
+        } else {
+            int randomPartyMember = (int)(3*Math.random());
+            // **REMINDER** add sneak and taunt in
+            party.get(randomPartyMember).takeDamage(damage);
+            if(m.getType().equals("Dragon") || m.getType().equals("Goblin")){
+                if(4*Math.random() == 0){
+                    party.get(randomPartyMember).setIsPoisoned(true);
+                }
+            }
+        }
     }
 
 
@@ -244,7 +257,7 @@ public class MainAdventure {
             for(int i=0;i<randNum;i++){
                 kb.nextLine();
             }
-            return kb.nextLine() + " the " + Monster.getType();
+            return kb.nextLine();
         } catch (Exception e) {
             System.out.print(e.getMessage());
             return "";
@@ -254,11 +267,9 @@ public class MainAdventure {
     }
 
 
-    public int poisonCheck(Entity Entity){
+    public void poisonCheck(Entity Entity){
         if(Entity.getIsPoisoned() == true){
-            Entity.takeDmg();
-        } else {
-            return
+            Entity.takeDmg(1);
         }
         //checks each turn if player/monster isPoisoned = true, if true deals 1 dmg.
     } 

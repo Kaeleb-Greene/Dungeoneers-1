@@ -25,6 +25,7 @@ public int takeAction(){
     }
 }
 
+
 public boolean isMonster(){
     return true;
 };
