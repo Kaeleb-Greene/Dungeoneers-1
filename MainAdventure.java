@@ -257,7 +257,7 @@ public class MainAdventure {
             for(int i=0;i<randNum;i++){
                 kb.nextLine();
             }
-            return kb.nextLine() + " the " + Monster.getType();
+            return kb.nextLine();
         } catch (Exception e) {
             System.out.print(e.getMessage());
             return "";
