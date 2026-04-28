@@ -15,3 +15,4 @@ public class Knight extends Player{
         this.setIsDefending(true);
     }
 }
+}

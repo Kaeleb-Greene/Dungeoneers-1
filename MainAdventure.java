@@ -47,124 +47,193 @@ public class MainAdventure {
         }
     }
 
+    public static ArrayList<Player> createParty(){
+        Scanner kb = new Scanner(System.in);
+        int fileChoice = -1;
+        System.out.println("Welcome to Dungeoneers! \n (1) Start New Game \n (2) Load Save?");
+        while (fileChoice != 1 && fileChoice != 2){
+            fileChoice = kb.nextInt();
+            if (fileChoice == 1){
+                ArrayList<Entity> party = new ArrayList<Entity>(3);
+                //Name, subClass
+                for (int i = 1; i <= 3; i++){
+                    System.out.println("Player " + i + ", Choose Your Subclass!");
+                    System.out.println("(1) Knight: Slash your enemies with the sword! Save " +
+                        "your teammates by taunting enemies to attack you! Most health!");
+                    System.out.println("(2) Rogue: Sneak past your enemies! Poison an enemy with " +
+                        "your dagger or quickly stab multiple in one turn! Least health!"); 
+                    System.out.println("(3) Wizard: Roast your enemies with Fireballs! Magically " +
+                        "block half of damage received. Low health!");
+                    System.out.println("(4) Alchemist: Use potions to disable your opponents! " +
+                        "Poison them over time, weaken their attacks, or just damage them. Medium health");
+                    System.out.println("(5) Cleric: Bash enemies with your mace! Heal your allies! " +
+                        "High health.");
+                    
+                    int nextClassChoice = kb.nextInt();
+                    System.out.println("Player " + i + ", choose your name!")
+                    String nextName = kb.nextLine();
+                    if (nextClassChoice == 1){
+                        party.add(new Knight(nextName));
+                        System.out.println("Successfully added Player " + i + ": " + nextName + " the Knight!");
+                    } else if (nextClassChoice == 2){
+                        party.add(new Rogue(nextName));
+                        System.out.println("Successfully added Player " + i + ": " + nextName + " the Rogue!");
+                    } else if (nextClassChoice == 3){
+                        party.add(new Wizard(nextName));
+                        System.out.println("Successfully added Player " + i + ": " + nextName + " the Wizard!");
+                    } else if (nextClassChoice == 4){
+                        party.add(new Alchemist(nextName));
+                        System.out.println("Successfully added Player " + i + ": " + nextName + " the Alchemist!");
+                    } else if (nextClassChoice == 5){
+                        party.add(new Cleric(nextName));
+                        System.out.println("Successfully added Player " + i + ": " + nextName + " the Cleric!");
+                    }}
+                
+            
+            } else if (fileChoice == 2){
+
+                
+            }
+        }
+    }
+
+    public static ArrayList <Entity> determineOrder(ArrayList<Entity> party, ArrayList<Entity> monsters){
+        ArrayList<Entity> turnOrder = new ArrayList<Entity>();
+        for (int i = 0; i < Math.min(party.size(),monsters.size()); i++){
+            turnOrder.add(party.get(i));
+            turnOrder.add(monsters.get(i));
+        }
+        if (party.size() > monsters.size()){
+            for (int i = monsters.size(); i < party.size();i++){
+                turnOrder.add(party.get(i));
+            }
+        }
+        if (monsters.size() > party.size()){
+            for (int i = party.size(); i < monsters.size();i++){
+                turnOrder.add(monsters.get(i));
+            }
+        }
+        return turnOrder;
+    }
+
     public static ArrayList<Monster> createLevel(int level){
-        ArrayList<Monster> monsters = new ArrayList<Monster>(3);
+        ArrayList<Entity> monsters = new ArrayList<Entity>(3);
         double randNum = Math.random();
         if(level == 1){
-            monsters.add(Monster("placeholder",4,2,"Skeleton", false));
-            monsters.add(Monster("placeholder",4,2,"Skeleton", false));
-            monsters.add(Monster("placeholder",4,2,"Skeleton", false));
+            monsters.add(new Monster(getMonsterName(),4,2,"Skeleton", false));
+            monsters.add(new Monster(getMonsterName(),4,2,"Skeleton", false));
+            monsters.add(new Monster(getMonsterName(),4,2,"Skeleton", false));
         } else if (level == 2){
             if(4*randNum < 1){
-                monsters.add(Monster("placeholder",4,2,"Skeleton", false));
-                monsters.add(Monster("placeholder",4,2,"Skeleton", false));
-                monsters.add(Monster("placeholder",4,2,"Skeleton", false));
+                monsters.add(new Monster(getMonsterName(),4,2,"Skeleton", false));
+                monsters.add(new Monster(getMonsterName(),4,2,"Skeleton", false));
+                monsters.add(new Monster(getMonsterName(),4,2,"Skeleton", false));
             } else if(4*randNum < 3){
-                monsters.add(Monster("placeholder",4,2,"Skeleton", false));
-                monsters.add(Monster("placeholder",4,2,"Skeleton", false));
-                monsters.add(Monster("placeholder",6,2,"Zombie", false));
+                monsters.add(new Monster(getMonsterName(),4,2,"Skeleton", false));
+                monsters.add(new Monster(getMonsterName(),4,2,"Skeleton", false));
+                monsters.add(new Monster(getMonsterName(),6,2,"Zombie", false));
             } else {
-                monsters.add(Monster("placeholder",4,2,"Skeleton", false));
-                monsters.add(Monster("placeholder",6,2,"Zombie", false));
-                monsters.add(Monster("placeholder",6,2,"Zombie", false));
+                monsters.add(new Monster(getMonsterName(),4,2,"Skeleton", false));
+                monsters.add(new Monster(getMonsterName(),6,2,"Zombie", false));
+                monsters.add(new Monster(getMonsterName(),6,2,"Zombie", false));
             }
         } else if (level == 3){
             if(5*randNum < 1){
-                monsters.add(Monster("placeholder",4,2,"Skeleton", false));
-                monsters.add(Monster("placeholder",4,2,"Skeleton", false));
-                monsters.add(Monster("placeholder",6,2,"Zombie", false));
+                monsters.add(new Monster(getMonsterName(),4,2,"Skeleton", false));
+                monsters.add(new Monster(getMonsterName(),4,2,"Skeleton", false));
+                monsters.add(new Monster(getMonsterName(),6,2,"Zombie", false));
             } else if(5*randNum < 3){
-                monsters.add(Monster("placeholder",4,2,"Skeleton", false));
-                monsters.add(Monster("placeholder",6,2,"Zombie", false));
-                monsters.add(Monster("placeholder",9,2,"Goblin", false));
+                monsters.add(new Monster(getMonsterName(),4,2,"Skeleton", false));
+                monsters.add(new Monster(getMonsterName(),6,2,"Zombie", false));
+                monsters.add(new Monster(getMonsterName(),9,2,"Goblin", false));
             } else if(5*randNum < 4){
-                monsters.add(Monster("placeholder",6,2,"Zombie", false));
-                monsters.add(Monster("placeholder",6,2,"Zombie", false));
-                monsters.add(Monster("placeholder",6,2,"Zombie", false));
+                monsters.add(new Monster(getMonsterName(),6,2,"Zombie", false));
+                monsters.add(new Monster(getMonsterName(),6,2,"Zombie", false));
+                monsters.add(new Monster(getMonsterName(),6,2,"Zombie", false));
             } else {
-                monsters.add(Monster("placeholder",9,2,"Goblin", false));
-                monsters.add(Monster("placeholder",6,2,"Zombie", false));
-                monsters.add(Monster("placeholder",6,2,"Zombie", false));
+                monsters.add(new Monster(getMonsterName(),9,2,"Goblin", false));
+                monsters.add(new Monster(getMonsterName(),6,2,"Zombie", false));
+                monsters.add(new Monster(getMonsterName(),6,2,"Zombie", false));
             }
         } else if (level == 4){
             if(2*randNum < 1){
-                monsters.add(Monster("placeholder",9,2,"Goblin", false));
-                monsters.add(Monster("placeholder",6,2,"Zombie", false));
-                monsters.add(Monster("placeholder",6,2,"Zombie", false));
+                monsters.add(new Monster(getMonsterName(),9,2,"Goblin", false));
+                monsters.add(new Monster(getMonsterName(),6,2,"Zombie", false));
+                monsters.add(new Monster(getMonsterName(),6,2,"Zombie", false));
             } else {
-                monsters.add(Monster("placeholder",9,2,"Goblin", false));
-                monsters.add(Monster("placeholder",9,2,"Goblin", false));
-                monsters.add(Monster("placeholder",6,2,"Zombie", false));
+                monsters.add(new Monster(getMonsterName(),9,2,"Goblin", false));
+                monsters.add(new Monster(getMonsterName(),9,2,"Goblin", false));
+                monsters.add(new Monster(getMonsterName(),6,2,"Zombie", false));
             }
         } else if (level == 5){
             if(3*randNum < 2){
-                monsters.add(Monster("placeholder",9,2,"Goblin", false));
-                monsters.add(Monster("placeholder",9,2,"Goblin", false));
-                monsters.add(Monster("placeholder",10,3,"Raider", false));
+                monsters.add(new Monster(getMonsterName(),9,2,"Goblin", false));
+                monsters.add(new Monster(getMonsterName(),9,2,"Goblin", false));
+                monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
             } else {
-                monsters.add(Monster("placeholder",9,2,"Goblin", false));
-                monsters.add(Monster("placeholder",10,3,"Raider", false));
-                monsters.add(Monster("placeholder",10,3,"Raider", false));
+                monsters.add(new Monster(getMonsterName(),9,2,"Goblin", false));
+                monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
+                monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
             }
         } else if (level == 6){
             if(3*randNum < 1){
-                monsters.add(Monster("placeholder",9,2,"Goblin", false));
-                monsters.add(Monster("placeholder",9,2,"Goblin", false));
-                monsters.add(Monster("placeholder",10,3,"Raider", false));
+                monsters.add(new Monster(getMonsterName(),9,2,"Goblin", false));
+                monsters.add(new Monster(getMonsterName(),9,2,"Goblin", false));
+                monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
             } else {
-                monsters.add(Monster("placeholder",9,2,"Goblin", false));
-                monsters.add(Monster("placeholder",10,3,"Raider", false));
-                monsters.add(Monster("placeholder",10,3,"Raider", false));
+                monsters.add(new Monster(getMonsterName(),9,2,"Goblin", false));
+                monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
+                monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
             }
         } else if (level == 7){
-            monsters.add(Monster("placeholder",10,3,"Raider", false));
-            monsters.add(Monster("placeholder",10,3,"Raider", false));
-            monsters.add(Monster("placeholder",10,3,"Raider", false));
+            monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
+            monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
+            monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
         } else if (level == 8){
             if(4*randNum < 1){
-                monsters.add(Monster("placeholder",10,3,"Raider", false));
-                monsters.add(Monster("placeholder",10,3,"Raider", false));
-                monsters.add(Monster("placeholder",10,3,"Raider", false));
+                monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
+                monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
+                monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
             } else {
-                monsters.add(Monster("placeholder",10,3,"Raider", false));
-                monsters.add(Monster("placeholder",10,3,"Raider", false));
-                monsters.add(Monster("placeholder",14,4,"Orc", false));
+                monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
+                monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
+                monsters.add(new Monster(getMonsterName(),14,4,"Orc", false));
             }
         } else if (level == 9){
             if(4*randNum < 1){
-                monsters.add(Monster("placeholder",10,3,"Raider", false));
-                monsters.add(Monster("placeholder",10,3,"Raider", false));
-                monsters.add(Monster("placeholder",14,4,"Orc", false));
+                monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
+                monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
+                monsters.add(new Monster(getMonsterName(),14,4,"Orc", false));
             } else {
-                monsters.add(Monster("placeholder",10,3,"Raider", false));
-                monsters.add(Monster("placeholder",14,4,"Orc", false));
-                monsters.add(Monster("placeholder",14,4,"Orc", false));
+                monsters.add(new Monster(getMonsterName(),10,3,"Raider", false));
+                monsters.add(new Monster(getMonsterName(),14,4,"Orc", false));
+                monsters.add(new Monster(getMonsterName(),14,4,"Orc", false));
             }
         } else if (level == 10){
-            monsters.add(Monster("placeholder",14,4,"Orc", false));
-            monsters.add(Monster("placeholder",14,4,"Orc", false));
-            monsters.add(Monster("placeholder",14,4,"Orc", false));
+            monsters.add(new Monster(getMonsterName(),14,4,"Orc", false));
+            monsters.add(new Monster(getMonsterName(),14,4,"Orc", false));
+            monsters.add(new Monster(getMonsterName(),14,4,"Orc", false));
         } else {
             if(5*randNum < 1){
-                monsters.add(Monster("placeholder",14,4,"Orc", false));
-                monsters.add(Monster("placeholder",14,4,"Orc", false));
-                monsters.add(Monster("placeholder",14,4,"Orc", false));
+                monsters.add(new Monster(getMonsterName(),14,4,"Orc", false));
+                monsters.add(new Monster(getMonsterName(),14,4,"Orc", false));
+                monsters.add(new Monster(getMonsterName(),14,4,"Orc", false));
             } else if(5*randNum < 2){
-                monsters.add(Monster("placeholder",14,4,"Orc", false));
-                monsters.add(Monster("placeholder",14,4,"Orc", false));
-                monsters.add(Monster("placeholder",18,4,"Troll", false));
+                monsters.add(new Monster(getMonsterName(),14,4,"Orc", false));
+                monsters.add(new Monster(getMonsterName(),14,4,"Orc", false));
+                monsters.add(new Monster(getMonsterName(),18,4,"Troll", false));
             } else if(5*randNum < 3){
-                monsters.add(Monster("placeholder",14,4,"Orc", false));
-                monsters.add(Monster("placeholder",14,4,"Orc", false));
-                monsters.add(Monster("placeholder",30,2,"Golem", false));
+                monsters.add(new Monster(getMonsterName(),14,4,"Orc", false));
+                monsters.add(new Monster(getMonsterName(),14,4,"Orc", false));
+                monsters.add(new Monster(getMonsterName(),30,2,"Golem", false));
             } else if(5*randNum < 4){
-                monsters.add(Monster("placeholder",14,4,"Orc", false));
-                monsters.add(Monster("placeholder",18,4,"Troll", false));
-                monsters.add(Monster("placeholder",30,2,"Golem", false));
+                monsters.add(new Monster(getMonsterName(),14,4,"Orc", false));
+                monsters.add(new Monster(getMonsterName(),18,4,"Troll", false));
+                monsters.add(new Monster(getMonsterName(),30,2,"Golem", false));
             } else {
-                monsters.add(Monster("placeholder",18,4,"Troll", false));
-                monsters.add(Monster(getMonsterName(),18,4,"Troll", false));
-                monsters.add(Monster(getMonsterName(),30,2,"Golem", false));
+                monsters.add(new Monster(getMonsterName(),18,4,"Troll", false));
+                monsters.add(new Monster(getMonsterName(),18,4,"Troll", false));
+                monsters.add(new Monster(getMonsterName(),30,2,"Golem", false));
             }
         }
         return monsters;
