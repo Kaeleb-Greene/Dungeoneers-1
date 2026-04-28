@@ -10,6 +10,7 @@ public Player(String name, int hp, int dmg, int heal, String subClass, boolean i
         this.isDefending = false;
     }
 
+    public String getSubClass(){ return subClass; }
     public int getHeal() { return heal; }
     public boolean getIsDefending(){ return isDefending; }
     public void setIsDefending(boolean isDefending){ this.isDefending = isDefending; }
@@ -28,6 +29,6 @@ public Player(String name, int hp, int dmg, int heal, String subClass, boolean i
     }
 
     public boolean isMonster(){
-        // confirms that the player is not a monster and should be distinct from monsters.
+        return false;
     }
 }

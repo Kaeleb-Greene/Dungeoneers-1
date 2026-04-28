@@ -1,16 +1,16 @@
 public class Rogue extends Player {
     
-    public Rogue(int hp, int dmg, String name, int heal, String subClass, boolean isDefending, boolean isPoisoned){
-        super(name, hp, dmg, heal, subClass, isDefending, isPoisoned);
+    public Rogue(String name){
+        super(name, 6, 2 , 0, "rogue", false, false);
     }
 
 
-    public void Action1(){
-
+    public int poisonDagger(){
+        return poisonAttack();
     }
 
-    public void Action2(){
-
+    public int multiAttack(){
+        return splashAttack();
     }
 
     public void Defend(){

@@ -25,7 +25,7 @@ public abstract class Entity {
 
 
     public void takeDmg(){
-        setHp(getHp() - int Dmg);
+        setHp(getHp() - getDmg());
     }
 
         //Attack types

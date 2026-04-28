@@ -24,4 +24,8 @@ public int takeAction(){
         return this.normalAttack();
     }
 }
+
+public boolean isMonster(){
+    return true;
+};
 }

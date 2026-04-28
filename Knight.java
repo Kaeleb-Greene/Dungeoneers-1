@@ -1,14 +1,17 @@
 public class Knight extends Player{
 
-    public Knight(int hp, int dmg, String name, int heal, String subClass, boolean isDefending, boolean isPoisoned){
-        super(name, hp, dmg, heal, subClass, isDefending, isPoisoned);
-    
-    public void Action1(){
-
+    public Knight(String name){
+        super(name, 14, 4, 0, "Knight", false, false);
     }
 
-    public void Action2(){
+    boolean isTaunting = false;
 
+    public int swingSword(){
+        return getDmg();
+    }
+
+    public void taunt(){
+        isTaunting = true;
     }
 
     public void Defend(){
