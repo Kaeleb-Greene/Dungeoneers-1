@@ -230,6 +230,24 @@ public class MainAdventure {
         return total;
     }
 
+    public static void computerAction(Monster m){
+        int damage = m.takeAction();
+        if(m.getType().equals("Megaknight")){
+            party.get(0).takeDamage(damage);
+            party.get(1).takeDamage(damage);
+            party.get(2).takeDamage(damage);
+        } else {
+            int randomPartyMember = (int)(3*Math.random());
+            // **REMINDER** add sneak and taunt in
+            party.get(randomPartyMember).takeDamage(damage);
+            if(m.getType().equals("Dragon") || m.getType().equals("Goblin")){
+                if(4*Math.random() == 0){
+                    party.get(randomPartyMember).setIsPoisoned(true);
+                }
+            }
+        }
+    }
+
 
     public static String getMonsterName(){
         Scanner kb = null;

@@ -24,7 +24,6 @@ public int takeAction(){
         return this.normalAttack();
     }
 }
-<<<<<<< HEAD
 
 //Attack types
 public int normalAttack(){
@@ -45,6 +44,4 @@ public boolean isMonster(){
     // confirms that they are, indeed, a monster.
     return true;
 }
-=======
->>>>>>> 252405f64ab501cb622e7256f7d087282f5f0ca7
 }
