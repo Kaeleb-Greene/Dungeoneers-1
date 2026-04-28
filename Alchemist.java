@@ -1,25 +1,22 @@
 public class Alchemist extends Player {
     
-    public Alchemist(int hp, int dmg, String name, int heal, String subClass, boolean isDefending, boolean isPoisoned){
-        super(name, hp, dmg, heal, subClass, isDefending, isPoisoned);
-    }
-
     public Alchemist(String name){
-        this.hp = 10;
-        this.dmg = 2;
-        this.name = name;
-        this.heal = 3;
-        this.subClass = "Alchemist";
-        this.isDefending = false;
-        this.isPoisoned = false;
+        super(name, 10, 2, 3, "Alchemist", false, false);
     }
 
-    public void Action1(){
-
+    public int throwPotion(){
+        int Haselhoff  = ((int)(3 * Math.random()));
+        if(Haselhoff == 0){
+            return getDmg();
+        } else if(Haselhoff == 1){
+            return poisonAttack();
+        } else {
+            return 0;
+        }
     }
 
-    public void Action2(){
-
+    public int healingPotion(){
+        return this.getHeal();
     }
 
     public void Defend(){

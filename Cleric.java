@@ -1,25 +1,16 @@
 public class Cleric extends Player {
     
-    public Cleric(int hp, int dmg, String name, int heal, String subClass, boolean isDefending, boolean isPoisoned){
-        super(name, hp, dmg, heal, subClass, isDefending, isPoisoned);
-    }
-
     public Cleric(String name){
-        this.hp = ;
-        this.dmg = ;
-        this.name = name;
-        this.heal = ;
-        this.subClass = cleric;
-        this.isDefending = false;
-        this.isPoisoned = false;
+        super(name, 12, 2, 4, "Cleric", false, false);
     }
 
 
-    public int Action1(){
+    public int swingMace(){
+
         return this.getDmg();
     }
 
-    public int Action2(){
+    public int healingSpell(){
         return this.getHeal();
     }
 

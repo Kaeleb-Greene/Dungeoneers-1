@@ -10,6 +10,7 @@ public Player(String name, int hp, int dmg, int heal, String subClass, boolean i
         this.isDefending = false;
     }
 
+    public String getSubClass(){ return subClass; }
     public int getHeal() { return heal; }
     public boolean getIsDefending(){ return isDefending; }
     public void setIsDefending(boolean isDefending){ this.isDefending = isDefending; }

@@ -44,7 +44,7 @@ Character creation
                     Applies random attribute
                         Poison (-1 HP each turn for battle)
                         Harming (-2 HP)
-                        Immobility (miss turn)
+                            --Immobility (miss turn)
                         Weakness(sets enemy dmg to 1)
                 Heal potion
                     Heals 3 hp to chosen allay

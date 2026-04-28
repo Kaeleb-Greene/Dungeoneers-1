@@ -25,24 +25,11 @@ public int takeAction(){
     }
 }
 
-//Attack types
-public int normalAttack(){
-    return super.getDmg();
-}
-
-public int splashAttack(){
-    //returns dmg but applies dmg to all whole Player arraylist
-    return super.getDmg();
-}
-
-public int poisonAttack(){
-    //returns dmg then do 1 additional dmg every turn for the next 3 turns
-    return super.getDmg();
-}
 
 public boolean isMonster(){
-    // confirms that they are, indeed, a monster.
     return true;
+
 }
 
 }
+
