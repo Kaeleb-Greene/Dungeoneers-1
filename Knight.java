@@ -6,6 +6,10 @@ public class Knight extends Player{
 
     boolean isTaunting = false;
 
+    public boolean getIsTaunting(){
+        return isTaunting;
+    }
+
     public int swingSword(){
         return getDmg();
     }
@@ -18,4 +22,3 @@ public class Knight extends Player{
         this.setIsDefending(true);
     }
 }
-

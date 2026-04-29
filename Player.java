@@ -19,12 +19,12 @@ public Player(String name, int hp, int dmg, int heal, String subClass, boolean i
         setHp(getHp() + getHeal());
     }
 
-    public void takeDmg(){
+    public void takeDmg(int damage){
         if (getIsDefending() == true){
-        setHp(getHp() - getDmg()/2);
-        setIsDefending(false);
+            setHp(getHp() - damage/2);
+            setIsDefending(false);
         } else {
-        setHp(getHp() - getDmg());
+            setHp(getHp() - damage);
         }
     }
 

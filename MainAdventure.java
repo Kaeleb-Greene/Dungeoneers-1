@@ -20,7 +20,7 @@ public class MainAdventure {
             while (!levelCleared && !gameLost){
                 for (Entity person: entities){
                     if(person.isMonster()){
-                        computerAction(person);
+                        computerAction(person, monsters);
                     } else {
                         takeAction(person);
                     }
@@ -116,7 +116,7 @@ public class MainAdventure {
         return turnOrder;
     }
 
-    public static ArrayList<Monster> createLevel(int level){
+    public static ArrayList<Entity> createLevel(int level){
         ArrayList<Entity> monsters = new ArrayList<Entity>(3);
         double randNum = Math.random();
         if(level == 1){
@@ -299,16 +299,38 @@ public class MainAdventure {
         return total;
     }
 
-    public static void computerAction(Monster m){
+    public static void computerAction(Monster m, ArrayList<Player> party){
         int damage = m.takeAction();
         if(m.getType().equals("Megaknight")){
-            party.get(0).takeDamage(damage);
-            party.get(1).takeDamage(damage);
-            party.get(2).takeDamage(damage);
+            party.get(0).takeDmg(damage);
+            party.get(1).takeDmg(damage);
+            party.get(2).takeDmg(damage);
         } else {
-            int randomPartyMember = (int)(3*Math.random());
-            // **REMINDER** add sneak and taunt in
-            party.get(randomPartyMember).takeDamage(damage);
+            int randomPartyMember = 0;
+            while(true){
+                randomPartyMember = (int)(3*Math.random());
+                int iterations = 0;
+                for(Player player : party){
+                    if(player.getSubClass().equals("Knight")){
+                        if(((Knight)player).getIsTaunting()){
+                            if((int)(2*Math.random()) == 0){
+                                // taunt works
+                                randomPartyMember = iterations;
+                            }
+                        }
+                    }
+                    iterations++;
+                }
+                if(party.get(randomPartyMember).getSubClass().equals("Rogue")){
+                    if((int)(2*Math.random()) == 0){
+                        // sneak fails to work
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+            party.get(randomPartyMember).takeDmg(damage);
             if(m.getType().equals("Dragon") || m.getType().equals("Goblin")){
                 if(4*Math.random() == 0){
                     party.get(randomPartyMember).setIsPoisoned(true);
@@ -321,7 +343,7 @@ public class MainAdventure {
         Scanner kb = new Scanner(System.in);
         int actionNumber;
         System.out.println("What action would you like to do?");
-        if(p.getType().equals("Knight")){
+        if(p.getSubClass().equals("Knight")){
             System.out.println("0 | Swing Sword\n1 | Taunt\n2 | Defend");
             actionNumber = kb.nextInt();
             while(true){
