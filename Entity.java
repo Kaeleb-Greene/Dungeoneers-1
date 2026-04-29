@@ -4,11 +4,12 @@ public abstract class Entity {
     private int dmg;
     private boolean isPoisoned;
 
-    public Entity(String name, int hp, int dmg, boolean isPoisoned){
+    public Entity(String name, int hp, int dmg, boolean isPoisoned, int poisonTurnsLeft){
         this.name = name;
         this.hp = hp;
         this.dmg = dmg;
         this.isPoisoned = false;
+        this.poisonTurnsLeft = poisonTurnsLeft;
     }
 
     public int getDmg(){ return dmg; }
@@ -23,8 +24,11 @@ public abstract class Entity {
     public Boolean getIsPoisoned(){ return isPoisoned; }
     public void setIsPoisoned(boolean isPoisoned){ this.isPoisoned = isPoisoned; }
 
+    public int getPoisonTurnsLeft(){return poisonTurnsLeft;}
+    public void setPoisonTurnsLeft(int poisonTurnsLeft){this.poisonTurnsLeft = poisonTurnsLeft;}
 
-    public void takeDmg(){
+
+    public void takeDmg(int damage){
         setHp(getHp() - getDmg());
     }
 

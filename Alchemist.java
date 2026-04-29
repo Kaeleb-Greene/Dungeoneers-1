@@ -1,7 +1,7 @@
 public class Alchemist extends Player {
     
     public Alchemist(String name){
-        super(name, 10, 2, 3, "Alchemist", false, false);
+        super(name, 10, 2, 3, "Alchemist", false, false, 0);
     }
 
     public int throwPotion(){

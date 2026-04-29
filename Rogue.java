@@ -1,7 +1,7 @@
 public class Rogue extends Player {
     
     public Rogue(String name){
-        super(name, 6, 2 , 0, "rogue", false, false);
+        super(name, 6, 2 , 0, "rogue", false, false,0);
     }
 
 

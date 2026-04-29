@@ -1,7 +1,7 @@
 public class Cleric extends Player {
     
     public Cleric(String name){
-        super(name, 12, 2, 4, "Cleric", false, false);
+        super(name, 12, 2, 4, "Cleric", false, false,0);
     }
 
 

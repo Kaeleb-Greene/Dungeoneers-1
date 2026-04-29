@@ -3,8 +3,8 @@ public abstract class Player extends Entity {
     private int heal;
     private boolean isDefending;
 
-public Player(String name, int hp, int dmg, int heal, String subClass, boolean isDefending, boolean isPoisoned){
-        super(name, hp, dmg, isPoisoned);
+public Player(String name, int hp, int dmg, int heal, String subClass, boolean isDefending, boolean isPoisoned, int poisonTurnsLeft){
+        super(name, hp, dmg, isPoisoned,poisonTurnsLeft);
         this.subClass = subClass;
         this.heal = heal;
         this.isDefending = false;

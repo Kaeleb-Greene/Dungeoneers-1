@@ -1,7 +1,7 @@
 public class Knight extends Player{
 
     public Knight(String name){
-        super(name, 14, 4, 0, "Knight", false, false);
+        super(name, 14, 4, 0, "Knight", false, false,0);
     }
 
     boolean isTaunting = false;

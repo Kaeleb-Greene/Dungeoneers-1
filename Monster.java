@@ -5,7 +5,7 @@ public class Monster extends Entity{
     private String type;
 
 public Monster(String name, int dmg, int hp, String type, boolean isPoisoned){
-    super(name, hp, dmg, false);
+    super(name, hp, dmg, false,0);
     this.type = type;
 }
 
@@ -30,6 +30,7 @@ public boolean isMonster(){
     return true;
 
 }
+
 
 }
 

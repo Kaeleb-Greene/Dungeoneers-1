@@ -1,7 +1,7 @@
 public class Wizard extends Player {
     
     public Wizard(String name){
-        super(name, 8, 5, 0, "Wizard", false, false);
+        super(name, 8, 5, 0, "Wizard", false, false,0);
     }
 
     public int fireball(){

@@ -20,9 +20,9 @@ public class MainAdventure {
             while (!levelCleared && !gameLost){
                 for (Entity person: entities){
                     if(person.isMonster()){
-                        computerAction(person);
+                        computerAction(person, monsters);
                     } else {
-                        takeAction(person);
+                        takeAction(person, monsters);
                     }
                     if (party.isEmpty()){
                         gameLost = true;
@@ -70,7 +70,7 @@ public class MainAdventure {
                         "High health.");
                     
                     int nextClassChoice = kb.nextInt();
-                    System.out.println("Player " + i + ", choose your name!")
+                    System.out.println("Player " + i + ", choose your name!");
                     String nextName = kb.nextLine();
                     if (nextClassChoice == 1){
                         party.add(new Knight(nextName));
@@ -87,9 +87,10 @@ public class MainAdventure {
                     } else if (nextClassChoice == 5){
                         party.add(new Cleric(nextName));
                         System.out.println("Successfully added Player " + i + ": " + nextName + " the Cleric!");
-                    }}
-                
+                    }
+                }
             
+                return party;
             } else if (fileChoice == 2){
 
                 
@@ -299,16 +300,16 @@ public class MainAdventure {
         return total;
     }
 
-    public static void computerAction(Monster m){
+    public static void computerAction(Monster m, ArrayList<Player> party){
         int damage = m.takeAction();
         if(m.getType().equals("Megaknight")){
-            party.get(0).takeDamage(damage);
-            party.get(1).takeDamage(damage);
-            party.get(2).takeDamage(damage);
+            party.get(0).takeDmg(damage);
+            party.get(1).takeDmg(damage);
+            party.get(2).takeDmg(damage);
         } else {
             int randomPartyMember = (int)(3*Math.random());
             // **REMINDER** add sneak and taunt in
-            party.get(randomPartyMember).takeDamage(damage);
+            party.get(randomPartyMember).takeDmg(damage);
             if(m.getType().equals("Dragon") || m.getType().equals("Goblin")){
                 if(4*Math.random() == 0){
                     party.get(randomPartyMember).setIsPoisoned(true);
@@ -317,11 +318,12 @@ public class MainAdventure {
         }
     }
 
-    public static void takeAction(Player p){
+    public static ArrayList<Monster> takeAction(Player player, ArrayList<Monster> monsters){
         Scanner kb = new Scanner(System.in);
         int actionNumber;
         System.out.println("What action would you like to do?");
-        if(p.getType().equals("Knight")){
+        if(player.getSubClass().equals("Knight")){
+            Knight p = (Knight) player;
             System.out.println("0 | Swing Sword\n1 | Taunt\n2 | Defend");
             actionNumber = kb.nextInt();
             while(true){
@@ -330,7 +332,7 @@ public class MainAdventure {
                         System.out.println("Which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp + "hp");
+                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp() + "hp");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -359,7 +361,8 @@ public class MainAdventure {
                     System.out.println(e.getMessage());
                 }
             }
-        } else if(p.getType().equals("Rogue")){
+        } else if(player.getSubClass().equals("Rogue")){
+            Rogue p = (Rogue) player;
             System.out.println("0 | Poison Dagger\n1 | Multi Attack\n2 | Defend");
             actionNumber = kb.nextInt();
             while(true){
@@ -368,7 +371,7 @@ public class MainAdventure {
                         System.out.println("Which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp + "hp");
+                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp() + " hp");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -398,7 +401,8 @@ public class MainAdventure {
                     System.out.println(e.getMessage());
                 }
             }
-        } else if(p.getType().equals("Wizard")){
+        } else if(player.getSubClass().equals("Wizard")){
+            Wizard p = (Wizard) player;
             System.out.println("0 | Fireball\n1 | Vegas Fireball\n2 | Defend");
             actionNumber = kb.nextInt();
             while(true){
@@ -407,7 +411,7 @@ public class MainAdventure {
                         System.out.println("Which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp + "hp");
+                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp() + "hp");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -424,7 +428,7 @@ public class MainAdventure {
                     } else if(actionNumber == 1){System.out.println("Which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp + "hp");
+                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp() + "hp");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -450,7 +454,8 @@ public class MainAdventure {
                     System.out.println(e.getMessage());
                 }
             }
-        } else if(p.getType().equals("Alchemist")){
+        } else if(player.getType().equals("Alchemist")){
+            Alchemist p = (Alchemist) player;
             System.out.println("0 | Throw Potion\n1 | Healing Potion\n2 | Defend");
             actionNumber = kb.nextInt();
             while(true){
@@ -459,7 +464,7 @@ public class MainAdventure {
                         System.out.println("Which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp + "hp");
+                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp() + "hp");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -490,6 +495,7 @@ public class MainAdventure {
                 }
             }
         } else {
+            Cleric p = (Cleric) player;
             System.out.println("0 | Swing Mace\n1 | Healing Spell\n2 | Defend");
             actionNumber = kb.nextInt();
             while(true){
@@ -528,9 +534,9 @@ public class MainAdventure {
                 }
             }
         }
+        return monsters;
     }
-
-    public static String getMonsterName(){
+public static String getMonsterName(){
         Scanner kb = null;
         try {
             int randNum = (int)(80*Math.random());
@@ -546,14 +552,16 @@ public class MainAdventure {
             kb.close();
         }
     }
+    
 
 
     public int poisonCheck(Entity Entity){
         if(Entity.getIsPoisoned() == true){
-            Entity.takeDmg();
-
+            Entity.takeDmg(1);
+            Entity.setPoisonTurnsLeft(Entity.getPoisonTurnsLeft()-1);
         }
         //checks each turn if player/monster isPoisoned = true, if true deals 1 dmg.
+        //Need to lower one turn of poison
     } 
 
 }
