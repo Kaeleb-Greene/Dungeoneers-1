@@ -299,6 +299,236 @@ public class MainAdventure {
         return total;
     }
 
+    public static void computerAction(Monster m){
+        int damage = m.takeAction();
+        if(m.getType().equals("Megaknight")){
+            party.get(0).takeDamage(damage);
+            party.get(1).takeDamage(damage);
+            party.get(2).takeDamage(damage);
+        } else {
+            int randomPartyMember = (int)(3*Math.random());
+            // **REMINDER** add sneak and taunt in
+            party.get(randomPartyMember).takeDamage(damage);
+            if(m.getType().equals("Dragon") || m.getType().equals("Goblin")){
+                if(4*Math.random() == 0){
+                    party.get(randomPartyMember).setIsPoisoned(true);
+                }
+            }
+        }
+    }
+
+    public static void takeAction(Player p){
+        Scanner kb = new Scanner(System.in);
+        int actionNumber;
+        System.out.println("What action would you like to do?");
+        if(p.getType().equals("Knight")){
+            System.out.println("0 | Swing Sword\n1 | Taunt\n2 | Defend");
+            actionNumber = kb.nextInt();
+            while(true){
+                try{
+                    if(actionNumber == 0){
+                        System.out.println("Which enemy would you like to hit?");
+                        int iterations = 0;
+                        for(Monster monster : monsters){
+                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp + "hp");
+                            iterations++;
+                        }
+                        actionNumber = kb.nextInt();
+                        if(actionNumber == 0){
+                            monsters.get(0).takeDmg(p.swingSword());
+                        } else if(actionNumber == 1){
+                            monsters.get(1).takeDmg(p.swingSword());
+                        } else if(actionNumber == 2){
+                            monsters.get(2).takeDmg(p.swingSword());
+                        } else {
+                            throw new InvalidMoveException();
+                        }
+                        break;
+                    } else if(actionNumber == 1){
+                        p.taunt();
+                        break;
+                    } else if(actionNumber == 2){
+                        p.Defend();
+                        break;
+                    } else {
+                        throw new InvalidMoveException();
+                    }
+                }catch(InvalidMoveException ime){
+                    System.out.println("Please input a valid number");
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        } else if(p.getType().equals("Rogue")){
+            System.out.println("0 | Poison Dagger\n1 | Multi Attack\n2 | Defend");
+            actionNumber = kb.nextInt();
+            while(true){
+                try{
+                    if(actionNumber == 0){
+                        System.out.println("Which enemy would you like to hit?");
+                        int iterations = 0;
+                        for(Monster monster : monsters){
+                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp + "hp");
+                            iterations++;
+                        }
+                        actionNumber = kb.nextInt();
+                        // POISON EFFECT?
+                        if(actionNumber == 0){
+                            monsters.get(0).takeDmg(p.poisonDagger());
+                        } else if(actionNumber == 1){
+                            monsters.get(1).takeDmg(p.poisonDagger());
+                        } else if(actionNumber == 2){
+                            monsters.get(2).takeDmg(p.poisonDagger());
+                        } else {
+                            throw new InvalidMoveException();
+                        }
+                        break;
+                    } else if(actionNumber == 1){
+                        p.multiAttack();
+                        break;
+                    } else if(actionNumber == 2){
+                        p.Defend();
+                        break;
+                    } else {
+                        throw new InvalidMoveException();
+                    }
+                }catch(InvalidMoveException ime){
+                    System.out.println("Please input a valid number");
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        } else if(p.getType().equals("Wizard")){
+            System.out.println("0 | Fireball\n1 | Vegas Fireball\n2 | Defend");
+            actionNumber = kb.nextInt();
+            while(true){
+                try{
+                    if(actionNumber == 0){
+                        System.out.println("Which enemy would you like to hit?");
+                        int iterations = 0;
+                        for(Monster monster : monsters){
+                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp + "hp");
+                            iterations++;
+                        }
+                        actionNumber = kb.nextInt();
+                        if(actionNumber == 0){
+                            monsters.get(0).takeDmg(p.fireball());
+                        } else if(actionNumber == 1){
+                            monsters.get(1).takeDmg(p.fireball());
+                        } else if(actionNumber == 2){
+                            monsters.get(2).takeDmg(p.fireball());
+                        } else {
+                            throw new InvalidMoveException();
+                        }
+                        break;
+                    } else if(actionNumber == 1){System.out.println("Which enemy would you like to hit?");
+                        int iterations = 0;
+                        for(Monster monster : monsters){
+                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp + "hp");
+                            iterations++;
+                        }
+                        actionNumber = kb.nextInt();
+                        if(actionNumber == 0){
+                            monsters.get(0).takeDmg(p.vegasFireball());
+                        } else if(actionNumber == 1){
+                            monsters.get(1).takeDmg(p.vegasFireball());
+                        } else if(actionNumber == 2){
+                            monsters.get(2).takeDmg(p.vegasFireball());
+                        } else {
+                            throw new InvalidMoveException();
+                        }
+                        break;
+                    } else if(actionNumber == 2){
+                        p.Defend();
+                        break;
+                    } else {
+                        throw new InvalidMoveException();
+                    }
+                }catch(InvalidMoveException ime){
+                    System.out.println("Please input a valid number");
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        } else if(p.getType().equals("Alchemist")){
+            System.out.println("0 | Throw Potion\n1 | Healing Potion\n2 | Defend");
+            actionNumber = kb.nextInt();
+            while(true){
+                try{
+                    if(actionNumber == 0){
+                        System.out.println("Which enemy would you like to hit?");
+                        int iterations = 0;
+                        for(Monster monster : monsters){
+                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp + "hp");
+                            iterations++;
+                        }
+                        actionNumber = kb.nextInt();
+                        if(actionNumber == 0){
+                            //action
+                        } else if(actionNumber == 1){
+                            //action
+                        } else if(actionNumber == 2){
+                            //action
+                        } else {
+                            throw new InvalidMoveException();
+                        }
+                        p.throwPotion();
+                        break;
+                    } else if(actionNumber == 1){
+                        p.healingPotion();
+                        break;
+                    } else if(actionNumber == 2){
+                        p.Defend();
+                        break;
+                    } else {
+                        throw new InvalidMoveException();
+                    }
+                }catch(InvalidMoveException ime){
+                    System.out.println("Please input a valid number");
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        } else {
+            System.out.println("0 | Swing Mace\n1 | Healing Spell\n2 | Defend");
+            actionNumber = kb.nextInt();
+            while(true){
+                try{
+                    if(actionNumber == 0){
+                        System.out.println("Which enemy would you like to hit?");
+                        int iterations = 0;
+                        for(Monster monster : monsters){
+                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp + "hp");
+                            iterations++;
+                        }
+                        actionNumber = kb.nextInt();
+                        if(actionNumber == 0){
+                            monsters.get(0).takeDmg(p.swingMace());
+                        } else if(actionNumber == 1){
+                            monsters.get(1).takeDmg(p.swingMace());
+                        } else if(actionNumber == 2){
+                            monsters.get(2).takeDmg(p.swingMace());
+                        } else {
+                            throw new InvalidMoveException();
+                        }
+                        break;
+                    } else if(actionNumber == 1){
+                        p.healingSpell();
+                        break;
+                    } else if(actionNumber == 2){
+                        p.Defend();
+                        break;
+                    } else {
+                        throw new InvalidMoveException();
+                    }
+                }catch(InvalidMoveException ime){
+                    System.out.println("Please input a valid move.");
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }
 
     public static String getMonsterName(){
         Scanner kb = null;
@@ -318,11 +548,9 @@ public class MainAdventure {
     }
 
 
-    public int poisonCheck(Entity Entity){
+    public void poisonCheck(Entity Entity){
         if(Entity.getIsPoisoned() == true){
             Entity.takeDmg();
-        } else {
-            return
         }
         //checks each turn if player/monster isPoisoned = true, if true deals 1 dmg.
     } 
