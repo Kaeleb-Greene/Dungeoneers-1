@@ -330,7 +330,7 @@ public class MainAdventure {
                         System.out.println("Which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp + "hp");
+                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp() + "hp");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -384,7 +384,8 @@ public class MainAdventure {
                         }
                         break;
                     } else if(actionNumber == 1){
-                        p.multiAttack();
+                        for(Monster monster : monsters)
+                            monster.takeDmg(p.multiAttack());
                         break;
                     } else if(actionNumber == 2){
                         p.Defend();
@@ -464,18 +465,27 @@ public class MainAdventure {
                         }
                         actionNumber = kb.nextInt();
                         if(actionNumber == 0){
-                            //action
+                            monsters.get(0).takeDmg(p.throwPotion());
                         } else if(actionNumber == 1){
-                            //action
+                            monsters.get(1).takeDmg(p.throwPotion());
                         } else if(actionNumber == 2){
-                            //action
+                            monsters.get(2).takeDmg(p.throwPotion());
                         } else {
                             throw new InvalidMoveException();
                         }
-                        p.throwPotion();
                         break;
                     } else if(actionNumber == 1){
-                        p.healingPotion();
+                        System.out.println("Which character would you like to heal?\n0 | Player 1\n1 | Player 2\n2 | Player 3");
+                        actionNumber = kb.nextInt();
+                        if(actionNumber == 0){
+                            party.get(0).heal(p.healingPotion());
+                        } else if(actionNumber == 1){
+                            party.get(1).takeDmg(p.healingPotion());
+                        } else if(actionNumber == 2){
+                            party.get(2).takeDmg(p.healingPotion());
+                        } else {
+                            throw new InvalidMoveException();
+                        }
                         break;
                     } else if(actionNumber == 2){
                         p.Defend();
@@ -513,7 +523,17 @@ public class MainAdventure {
                         }
                         break;
                     } else if(actionNumber == 1){
-                        p.healingSpell();
+                        System.out.println("Which character would you like to heal?\n0 | Player 1\n1 | Player 2\n2 | Player 3");
+                        actionNumber = kb.nextInt();
+                        if(actionNumber == 0){
+                            party.get(0).heal(p.healingSpell());
+                        } else if(actionNumber == 1){
+                            party.get(1).takeDmg(p.healingSpell());
+                        } else if(actionNumber == 2){
+                            party.get(2).takeDmg(p.healingSpell());
+                        } else {
+                            throw new InvalidMoveException();
+                        }
                         break;
                     } else if(actionNumber == 2){
                         p.Defend();
@@ -538,7 +558,7 @@ public class MainAdventure {
             for(int i=0;i<randNum;i++){
                 kb.nextLine();
             }
-            return kb.nextLine() + " the " + Monster.getType();
+            return kb.nextLine();
         } catch (Exception e) {
             System.out.print(e.getMessage());
             return "";
