@@ -117,8 +117,10 @@ public class MainAdventure {
         return turnOrder;
     }
 
+
     public static ArrayList<Monster> createLevel(int level){
         ArrayList<Monster> monsters = new ArrayList<Monster>(3);
+
         double randNum = Math.random();
         if(level == 1){
             monsters.add(new Monster(getMonsterName(),4,2,"Skeleton", false));
@@ -307,8 +309,31 @@ public class MainAdventure {
             party.get(1).takeDmg(damage);
             party.get(2).takeDmg(damage);
         } else {
-            int randomPartyMember = (int)(3*Math.random());
             // **REMINDER** add sneak and taunt in
+            int randomPartyMember = 0;
+            while(true){
+                randomPartyMember = (int)(3*Math.random());
+                int iterations = 0;
+                for(Player player : party){
+                    if(player.getSubClass().equals("Knight")){
+                        if(((Knight)player).getIsTaunting()){
+                            if((int)(2*Math.random()) == 0){
+                                // taunt works
+                                randomPartyMember = iterations;
+                            }
+                        }
+                    }
+                    iterations++;
+                }
+                if(party.get(randomPartyMember).getSubClass().equals("Rogue")){
+                    if((int)(2*Math.random()) == 0){
+                        // sneak fails to work
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
             party.get(randomPartyMember).takeDmg(damage);
             if(m.getType().equals("Dragon") || m.getType().equals("Goblin")){
                 if(4*Math.random() == 0){
@@ -324,6 +349,7 @@ public class MainAdventure {
         System.out.println("What action would you like to do?");
         if(player.getSubClass().equals("Knight")){
             Knight p = (Knight) player;
+
             System.out.println("0 | Swing Sword\n1 | Taunt\n2 | Defend");
             actionNumber = kb.nextInt();
             while(true){
@@ -387,7 +413,8 @@ public class MainAdventure {
                         }
                         break;
                     } else if(actionNumber == 1){
-                        p.multiAttack();
+                        for(Monster monster : monsters)
+                            monster.takeDmg(p.multiAttack());
                         break;
                     } else if(actionNumber == 2){
                         p.Defend();
@@ -469,18 +496,27 @@ public class MainAdventure {
                         }
                         actionNumber = kb.nextInt();
                         if(actionNumber == 0){
-                            //action
+                            monsters.get(0).takeDmg(p.throwPotion());
                         } else if(actionNumber == 1){
-                            //action
+                            monsters.get(1).takeDmg(p.throwPotion());
                         } else if(actionNumber == 2){
-                            //action
+                            monsters.get(2).takeDmg(p.throwPotion());
                         } else {
                             throw new InvalidMoveException();
                         }
-                        p.throwPotion();
                         break;
                     } else if(actionNumber == 1){
-                        p.healingPotion();
+                        System.out.println("Which character would you like to heal?\n0 | Player 1\n1 | Player 2\n2 | Player 3");
+                        actionNumber = kb.nextInt();
+                        if(actionNumber == 0){
+                            party.get(0).heal(p.healingPotion());
+                        } else if(actionNumber == 1){
+                            party.get(1).takeDmg(p.healingPotion());
+                        } else if(actionNumber == 2){
+                            party.get(2).takeDmg(p.healingPotion());
+                        } else {
+                            throw new InvalidMoveException();
+                        }
                         break;
                     } else if(actionNumber == 2){
                         p.Defend();
@@ -519,7 +555,17 @@ public class MainAdventure {
                         }
                         break;
                     } else if(actionNumber == 1){
-                        p.healingSpell();
+                        System.out.println("Which character would you like to heal?\n0 | Player 1\n1 | Player 2\n2 | Player 3");
+                        actionNumber = kb.nextInt();
+                        if(actionNumber == 0){
+                            party.get(0).heal(p.healingSpell());
+                        } else if(actionNumber == 1){
+                            party.get(1).takeDmg(p.healingSpell());
+                        } else if(actionNumber == 2){
+                            party.get(2).takeDmg(p.healingSpell());
+                        } else {
+                            throw new InvalidMoveException();
+                        }
                         break;
                     } else if(actionNumber == 2){
                         p.Defend();
@@ -544,7 +590,7 @@ public static String getMonsterName(){
             for(int i=0;i<randNum;i++){
                 kb.nextLine();
             }
-            return kb.nextLine() + " the " + Monster.getType();
+            return kb.nextLine();
         } catch (Exception e) {
             System.out.print(e.getMessage());
             return "";
