@@ -97,7 +97,7 @@ public class MainAdventure {
         }
     }
 
-    public static ArrayList <Entity> determineOrder(ArrayList<Entity> party, ArrayList<Entity> monsters){
+    public static ArrayList <Entity> determineOrder(ArrayList<Player> party, ArrayList<Monster> monsters){
         ArrayList<Entity> turnOrder = new ArrayList<Entity>();
         for (int i = 0; i < Math.min(party.size(),monsters.size()); i++){
             turnOrder.add(party.get(i));
@@ -117,7 +117,7 @@ public class MainAdventure {
     }
 
     public static ArrayList<Monster> createLevel(int level){
-        ArrayList<Entity> monsters = new ArrayList<Entity>(3);
+        ArrayList<Monster> monsters = new ArrayList<Monster>(3);
         double randNum = Math.random();
         if(level == 1){
             monsters.add(new Monster(getMonsterName(),4,2,"Skeleton", false));
@@ -548,9 +548,10 @@ public class MainAdventure {
     }
 
 
-    public void poisonCheck(Entity Entity){
+    public int poisonCheck(Entity Entity){
         if(Entity.getIsPoisoned() == true){
             Entity.takeDmg();
+
         }
         //checks each turn if player/monster isPoisoned = true, if true deals 1 dmg.
     } 
