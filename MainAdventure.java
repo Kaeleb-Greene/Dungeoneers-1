@@ -99,7 +99,8 @@ public class MainAdventure {
                 }
             } else { // if fileChoice == 2
                 //Come back to this
-                
+                return party;
+
             }
         return party;
     }
