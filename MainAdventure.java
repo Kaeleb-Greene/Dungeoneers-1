@@ -89,11 +89,8 @@ public class MainAdventure {
                         System.out.println("Successfully added Player " + i + ": " + nextName + " the Cleric!");
                     }
                 }
-            
                 return party;
-            } else if (fileChoice == 2){
-
-                
+            } else if (fileChoice == 2){    
             }
         }
     }
