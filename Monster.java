@@ -19,13 +19,3 @@ public Monster(String name, int dmg, int hp, String type, boolean isPoisoned){
         return true;
     }
 }
-
-
-public boolean isMonster(){
-    return true;
-
-}
-
-
-}
-

@@ -21,8 +21,8 @@ public Player(String name, int hp, int dmg, int heal, String subClass, boolean i
     public void setIsDefending(boolean isDefending){ this.isDefending = isDefending; }
 
     //calculates how players should get healed
-    public void heal(){
-        setHp(getHp() + getHeal());
+    public void heal(int heal){
+        setHp(getHp() + heal);
     }
 
     public void takeDmg(int damage){

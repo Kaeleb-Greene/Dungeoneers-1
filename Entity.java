@@ -4,6 +4,7 @@ public abstract class Entity {
     private int hp;
     private int dmg;
     private boolean isPoisoned;
+    private int poisonTurnsLeft;
 
     public Entity(String name, int hp, int dmg, boolean isPoisoned, int poisonTurnsLeft){
         this.name = name;
@@ -31,7 +32,7 @@ public abstract class Entity {
 
      //calculates how an entity takes dmg
     public void takeDmg(int damage){
-        setHp(getHp() - getDmg());
+        setHp(getHp() - damage);
     }
 
     //attack types
