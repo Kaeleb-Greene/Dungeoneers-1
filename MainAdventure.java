@@ -14,7 +14,7 @@ public class MainAdventure {
         while (!gameLost){
             ArrayList<Monster> monsters = createLevel(dungeonLevel, kb);
             boolean levelCleared = false;
-
+            System.out.println("\nWelcome to Level " + dungeonLevel + "\n");
             ArrayList<Entity> entities = determineOrder(party, monsters, kb);
 
             while (!levelCleared && !gameLost){
@@ -22,16 +22,27 @@ public class MainAdventure {
                     if(person.isMonster()){
                         computerAction((Monster) person, monsters, party);
                     } else {
+                        System.out.println("Your Party: ");
+                        for (Player player: party){
+                            System.out.println(player.getName() + " the " + player.getSubClass() + ": " + player.getHp() + " health");
+                        }
+                        System.out.println("\nMonster List: ");
+                        for (Monster monster: monsters){
+                            System.out.println(monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
+                        }
                         monsters = takeAction((Player) person, monsters, party, kb);
                     }
                     if (party.isEmpty()){
                         gameLost = true;
-                        System.out.println("Sorry! Better luck next time!");
+                        System.out.println("\nSorry! Better luck next time!");
                         break;
                     }
-                }
-                if (monsters.size() == 0){
-                    levelCleared = true;
+                    if (monsters.size() == 0){
+                        levelCleared = true;
+                        dungeonLevel ++;
+                        break;
+                    }
+        
                 }
             }
                 
@@ -39,7 +50,7 @@ public class MainAdventure {
             if(levelCleared){
                 System.out.println("Would you like to save? (Y/N)");
                 String answer = kb.next();
-                if(!(answer.equals("yes") || answer.equals("Yes") || answer.equals("YES"))){
+                if((answer.equals("yes") || answer.equals("Yes") || answer.equals("YES") || answer.equals("Y") || answer.equals("y"))){
                     // The player did not actually lose the game, but this breaks the loop. It will be reset when they load their save.
                     gameLost = true;
                     // temp
@@ -64,7 +75,7 @@ public class MainAdventure {
         if (fileChoice == 1){
                 //Name, subClass
                 for (int i = 1; i <= 3; i++){
-                    System.out.println("Player " + i + ", Choose Your Subclass!");
+                    System.out.println("\nPlayer " + i + ", Choose Your Subclass!");
                     System.out.println("(1) Knight: Slash your enemies with the sword! Save " +
                         "your teammates by taunting enemies to attack you! Most health!");
                     System.out.println("(2) Rogue: Sneak past your enemies! Poison an enemy with " +
@@ -77,7 +88,7 @@ public class MainAdventure {
                         "High health.");
                     
                     int nextClassChoice = kb.nextInt();
-                    System.out.println("Player " + i + ", choose your name!");
+                    System.out.println("\nPlayer " + i + ", choose your name!");
                     kb.nextLine();
                     String nextName = kb.nextLine();
                     if (nextClassChoice == 1){
@@ -316,6 +327,7 @@ public class MainAdventure {
                 party.get(0).takeDmg(damage);
                 party.get(1).takeDmg(damage);
                 party.get(2).takeDmg(damage);
+                System.out.println(m.getName() + " the Megaknight dealt " + damage + " to all players!\n");
             } else {
                 int randomPartyMember = 0;
                 while(true){
@@ -341,19 +353,23 @@ public class MainAdventure {
                         break;
                     }
                 }
+                System.out.println("\n" + m.getName() + " the " + m.getType() + " dealt " + damage + " damage to " + party.get(randomPartyMember).getName() + ".\n");
                 party.get(randomPartyMember).takeDmg(damage);
                 if(m.getType().equals("Dragon") || m.getType().equals("Goblin")){
                     if(4*Math.random() == 0){
                         party.get(randomPartyMember).setIsPoisoned(true);
+                        party.get(randomPartyMember).setPoisonTurnsLeft(3);
+                        System.out.println(party.get(randomPartyMember) + " is poisoned for 3 turns!\n");
                     }
                 }
+
             }
        }
     }
 
     public static ArrayList<Monster> takeAction(Player player, ArrayList<Monster> monsters, ArrayList<Player> party, Scanner kb){
         int actionNumber;
-        System.out.println("What action would you like to do?");
+        System.out.println("\nWhat action would you like to do?");
         if(player.getSubClass().equals("Knight")){
             Knight p = (Knight) player;
 
@@ -362,7 +378,7 @@ public class MainAdventure {
             while(true){
                 try{
                     if(actionNumber == 0){
-                        System.out.println(p.getName() + ", which enemy would you like to hit?");
+                        System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
                             System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp() + "hp");
@@ -422,6 +438,7 @@ public class MainAdventure {
                     } else if(actionNumber == 1){
                         for(Monster monster : monsters)
                             monster.takeDmg(p.multiAttack());
+                        System.out.println(p + " the Rogue dealt 2 damage to each enemy!\n");
                         break;
                     } else if(actionNumber == 2){
                         p.Defend();

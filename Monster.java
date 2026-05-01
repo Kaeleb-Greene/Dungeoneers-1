@@ -2,7 +2,7 @@
 public class Monster extends Entity{
     private String type;
 
-public Monster(String name, int dmg, int hp, String type, boolean isPoisoned){
+public Monster(String name, int hp, int dmg, String type, boolean isPoisoned){
     super(name, hp, dmg, false,0);
     this.type = type;
 }
