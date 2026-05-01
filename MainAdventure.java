@@ -597,7 +597,6 @@ public static String getMonsterName(){
     }
     
 
-
     public int poisonCheck(Entity Entity){
         if(Entity.getIsPoisoned() == true){
             Entity.takeDmg(1);
@@ -606,5 +605,4 @@ public static String getMonsterName(){
         //checks each turn if player/monster isPoisoned = true, if true deals 1 dmg.
         //Need to lower one turn of poison
     } 
-
 }
