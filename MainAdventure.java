@@ -628,8 +628,6 @@ public class MainAdventure {
             kb.close();
         }
     }
-    
-
 
     public static void poisonCheck(Entity Entity){
         if(Entity.getIsPoisoned() == true){
@@ -639,5 +637,4 @@ public class MainAdventure {
         //checks each turn if player/monster isPoisoned = true, if true deals 1 dmg.
         //Need to lower one turn of poison
     } 
-
 }

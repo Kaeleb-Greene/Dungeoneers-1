@@ -7,7 +7,6 @@ public Monster(String name, int hp, int dmg, String type, boolean isPoisoned){
     this.type = type;
 }
 
-
     //getters
     public String getType(){ return type; }
 
