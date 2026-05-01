@@ -2,6 +2,8 @@ import java.util.Scanner;
 import java.io.File;
 import java.util.ArrayList;
 public class MainAdventure {
+
+    //Miles/Nathan
     public static void main(String[] args){
         Scanner kb = new Scanner(System.in);
         //List of actions: move, open inventory, attack 1, special attack, 
@@ -53,6 +55,9 @@ public class MainAdventure {
         kb.close();
     }
 
+    //Nathan
+    //Character creation interface
+        //welcomes players to the game, prompts them to make their characters names and subclasses
     public static ArrayList<Player> createParty(Scanner kb){
         int fileChoice = -1;
         ArrayList<Player> party = new ArrayList<Player>(3);
@@ -105,6 +110,10 @@ public class MainAdventure {
         return party;
     }
 
+    //Nathan
+    //Determines who is attacking at a given time
+        //normal turn order: Player 1, AI 1, Player 2, AI 2, Player 3, AI 3
+        //changes depending on how amount of monsters/players in their respective party
     public static ArrayList <Entity> determineOrder(ArrayList<Player> party, ArrayList<Monster> monsters, Scanner kb){
         ArrayList<Entity> turnOrder = new ArrayList<Entity>();
         for (int i = 0; i < Math.min(party.size(),monsters.size()); i++){
@@ -125,6 +134,9 @@ public class MainAdventure {
     }
 
 
+    //Collaborative
+    //The Wall of Monsters
+    //determines how monsters are spawned based on current floor
     public static ArrayList<Monster> createLevel(int level, Scanner kb){
         ArrayList<Monster> monsters = new ArrayList<Monster>(3);
 
@@ -249,7 +261,8 @@ public class MainAdventure {
         return monsters;
     }
 
-    // This linear cipher has a decimation of 7 and a shift of 18
+    //Miles
+    //This linear cipher has a decimation of 7 and a shift of 18
     public static String linearCipher(String s, boolean encoding){
         ArrayList<Integer> nums = new ArrayList<Integer>();
         // total variable that adds each character
@@ -286,6 +299,9 @@ public class MainAdventure {
         }
         return total;
     }
+
+    //Miles
+    //
     public static String vigenereCipher(String s, boolean encoding){
         // declares a total
         String total = "";
@@ -309,6 +325,8 @@ public class MainAdventure {
         return total;
     }
 
+    //Miles
+    //determines who the AI will attack in combat
     public static void computerAction(Monster m, ArrayList<Monster> monsters, ArrayList<Player> party){
        if (m.getHp() > 0){
         int damage = m.getDmg();
@@ -351,6 +369,8 @@ public class MainAdventure {
        }
     }
 
+    //Miles
+    //prompts actions from a player based on that players subclass
     public static ArrayList<Monster> takeAction(Player player, ArrayList<Monster> monsters, ArrayList<Player> party, Scanner kb){
         int actionNumber;
         System.out.println("What action would you like to do?");
@@ -595,6 +615,9 @@ public class MainAdventure {
         }
         return m;
     }
+
+    //Miles
+    //generates random number then goes that many lines down in the monstername.txt file to pick a random name and apply it to a monster
     public static String getMonsterName(){
         Scanner kb = null;
         try {
@@ -612,12 +635,13 @@ public class MainAdventure {
         }
     }
 
+    //Nathan
+    //checks each turn if player/monster isPoisoned = true, if true deals 1 dmg.
+        //Need to lower one turn of poison
     public static void poisonCheck(Entity Entity){
         if(Entity.getIsPoisoned() == true){
             Entity.takeDmg(1);
             Entity.setPoisonTurnsLeft(Entity.getPoisonTurnsLeft()-1);
         }
-        //checks each turn if player/monster isPoisoned = true, if true deals 1 dmg.
-        //Need to lower one turn of poison
     } 
 }
