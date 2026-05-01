@@ -32,7 +32,7 @@ public abstract class Entity {
 
      //calculates how an entity takes dmg
     public void takeDmg(int damage){
-        setHp(getHp() - getDmg());
+        setHp(getHp() - damage);
     }
 
     //attack types

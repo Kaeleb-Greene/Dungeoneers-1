@@ -2,7 +2,7 @@
 public class Rogue extends Player {
     
     public Rogue(String name){
-        super(name, 6, 2 , 0, "rogue", false, false,0);
+        super(name, 6, 2 , 0, "Rogue", false, false,0);
     }
 
     //single hit attack; applies poison status to the target
