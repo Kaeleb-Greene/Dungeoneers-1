@@ -41,6 +41,21 @@ public class MainAdventure {
                     }
                     if (monsters.size() == 0){
                         levelCleared = true;
+                        // Loops through the party, restoring their hp
+                        for(Player player : party){
+                            if(player.getSubClass().equals("Knight")){
+                                player.setHp(14);
+                            } else if (player.getSubClass().equals("Cleric")){
+                                player.setHp(12);
+                            } else if (player.getSubClass().equals("Alchemist")){
+                                player.setHp(10);
+                            } else if (player.getSubClass().equals("Wizard")){
+                                player.setHp(8);
+                            } else {
+                                // Rogue
+                                player.setHp(6);
+                            }
+                        }
                         dungeonLevel ++;
                         break;
                     }
@@ -91,8 +106,20 @@ public class MainAdventure {
                         "Poison them over time, weaken their attacks, or just damage them. Medium health");
                     System.out.println("(5) Cleric: Bash enemies with your mace! Heal your allies! " +
                         "High health.");
-                    
-                    int nextClassChoice = kb.nextInt();
+                    int nextClassChoice = 0;
+                    while(nextClassChoice > 5 || nextClassChoice < 1){
+                        try {
+                            nextClassChoice = kb.nextInt();
+                            if(nextClassChoice > 5 || nextClassChoice < 1){
+                                System.out.println("Please input a valid number.");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Wow, attempting to make a fool of us by inputting a string rather than an int?");
+                            System.out.println("We will not be standing for this. Good luck surviving the dungeon now...");
+                            nextClassChoice = 6;
+                            break;
+                        }
+                    }
                     System.out.println("\nPlayer " + i + ", choose your name!");
                     kb.nextLine();
                     String nextName = kb.nextLine();
@@ -111,6 +138,9 @@ public class MainAdventure {
                     } else if (nextClassChoice == 5){
                         party.add(new Cleric(nextName));
                         System.out.println("Successfully added Player " + i + ": " + nextName + " the Cleric!");
+                    } else if (nextClassChoice == 6){
+                        party.add(new Knight(nextName, 1));
+                        System.out.println("Successfully added Player " + i + ": " + nextName + " the Knight!");
                     }
                 }
             } else { // if fileChoice == 2
@@ -268,6 +298,16 @@ public class MainAdventure {
                 monsters.add(new Monster(getMonsterName(),18,4,"Troll", false));
                 monsters.add(new Monster(getMonsterName(),30,2,"Golem", false));
             }
+        }
+        int randInt = (int)(20*Math.random());
+        if(randInt == 0){
+            randInt = (int)(3*Math.random());
+            monsters.remove(randInt);
+            monsters.add(new Monster(getMonsterName(), 30, 3, "Megaknight", false));
+        } else if (randInt >= 15 && level > 10){
+            randInt = (int)(3*Math.random());
+            monsters.remove(randInt);
+            monsters.add(new Monster(getMonsterName(), 30, 5, "Dragon", false));
         }
         return monsters;
     }
@@ -458,7 +498,7 @@ public class MainAdventure {
                     } else if(actionNumber == 1){
                         for(Monster monster : monsters)
                             monster.takeDmg(p.multiAttack());
-                        System.out.println(p + " the Rogue dealt 2 damage to each enemy!\n");
+                        System.out.println(p.getName() + " the Rogue dealt 2 damage to each enemy!\n");
                         break;
                     } else if(actionNumber == 2){
                         p.Defend();
