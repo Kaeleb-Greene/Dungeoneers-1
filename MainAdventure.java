@@ -71,10 +71,16 @@ public class MainAdventure {
                     // The player did not actually lose the game, but this breaks the loop. It will be reset when they load their save.
                     gameLost = true;
                     // temp
-                    String save = vigenereCipher(linearCipher(party.get(0).toString()
-                                                             + party.get(1).toString()
-                                                             + party.get(2).toString()
-                                                             + dungeonLevel, true),true);
+                    String save = vigenereCipher(linearCipher(party.get(0).getSubClass()
+                                                            + party.get(0).getName()
+                                                            + "\n"
+                                                            + party.get(1).getSubClass()
+                                                            + party.get(1).getName()
+                                                            + "\n"
+                                                            + party.get(2).getSubClass()
+                                                            + party.get(2).getName()
+                                                            + "\n"
+                                                            + dungeonLevel, true),true);
                 }
             }
         }
@@ -434,8 +440,8 @@ public class MainAdventure {
             Knight p = (Knight) player;
 
             System.out.println("0 | Swing Sword\n1 | Taunt\n2 | Defend");
-            actionNumber = kb.nextInt();
             while(true){
+                actionNumber = kb.nextInt();
                 try{
                     if(actionNumber == 0){
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
@@ -466,6 +472,8 @@ public class MainAdventure {
                     }
                 }catch(InvalidMoveException ime){
                     System.out.println("Please input a valid number");
+                    System.out.println("\nWhat action would you like to do?");
+                    System.out.println("0 | Swing Sword\n1 | Taunt\n2 | Defend");
                 }catch(Exception e){
                     System.out.println(e.getMessage());
                 }
@@ -473,8 +481,8 @@ public class MainAdventure {
         } else if(player.getSubClass().equals("Rogue")){
             Rogue p = (Rogue) player;
             System.out.println("0 | Poison Dagger\n1 | Multi Attack\n2 | Defend");
-            actionNumber = kb.nextInt();
             while(true){
+                actionNumber = kb.nextInt();
                 try{
                     if(actionNumber == 0){
                         System.out.println("Which enemy would you like to hit?");
@@ -508,6 +516,8 @@ public class MainAdventure {
                     }
                 }catch(InvalidMoveException ime){
                     System.out.println("Please input a valid number");
+                    System.out.println("\nWhat action would you like to do?");
+                    System.out.println("0 | Poison Dagger\n1 | Multi Attack\n2 | Defend");
                 }catch(Exception e){
                     System.out.println(e.getMessage());
                 }
@@ -515,8 +525,8 @@ public class MainAdventure {
         } else if(player.getSubClass().equals("Wizard")){
             Wizard p = (Wizard) player;
             System.out.println("0 | Fireball\n1 | Vegas Fireball\n2 | Defend");
-            actionNumber = kb.nextInt();
             while(true){
+                actionNumber = kb.nextInt();
                 try{
                     if(actionNumber == 0){
                         System.out.println("Which enemy would you like to hit?");
@@ -561,6 +571,8 @@ public class MainAdventure {
                     }
                 }catch(InvalidMoveException ime){
                     System.out.println("Please input a valid number");
+                    System.out.println("\nWhat action would you like to do?");
+                    System.out.println("0 | Fireball\n1 | Vegas Fireball\n2 | Defend");
                 }catch(Exception e){
                     System.out.println(e.getMessage());
                 }
@@ -568,8 +580,8 @@ public class MainAdventure {
         } else if(player.getSubClass().equals("Alchemist")){
             Alchemist p = (Alchemist) player;
             System.out.println("0 | Throw Potion\n1 | Healing Potion\n2 | Defend");
-            actionNumber = kb.nextInt();
             while(true){
+                actionNumber = kb.nextInt();
                 try{
                     if(actionNumber == 0){
                         System.out.println("Which enemy would you like to hit?");
@@ -590,14 +602,16 @@ public class MainAdventure {
                         }
                         break;
                     } else if(actionNumber == 1){
-                        System.out.println("Which character would you like to heal?\n0 | Player 1\n1 | Player 2\n2 | Player 3");
+                        System.out.println("Which character would you like to heal?\n0 | " + party.get(0).getName() + "\n1 | " 
+                                                                                            + party.get(1).getName() + "\n2 | "
+                                                                                            + party.get(2).getName());
                         actionNumber = kb.nextInt();
                         if(actionNumber == 0){
                             party.get(0).heal(p.healingPotion());
                         } else if(actionNumber == 1){
-                            party.get(1).takeDmg(p.healingPotion());
+                            party.get(1).heal(p.healingPotion());
                         } else if(actionNumber == 2){
-                            party.get(2).takeDmg(p.healingPotion());
+                            party.get(2).heal(p.healingPotion());
                         } else {
                             throw new InvalidMoveException();
                         }
@@ -610,6 +624,8 @@ public class MainAdventure {
                     }
                 }catch(InvalidMoveException ime){
                     System.out.println("Please input a valid number");
+                    System.out.println("\nWhat action would you like to do?");
+                    System.out.println("0 | Throw Potion\n1 | Healing Potion\n2 | Defend");
                 }catch(Exception e){
                     System.out.println(e.getMessage());
                 }
@@ -617,8 +633,8 @@ public class MainAdventure {
         } else {
             Cleric p = (Cleric) player;
             System.out.println("0 | Swing Mace\n1 | Healing Spell\n2 | Defend");
-            actionNumber = kb.nextInt();
             while(true){
+                actionNumber = kb.nextInt();
                 try{
                     if(actionNumber == 0){
                         System.out.println("Which enemy would you like to hit?");
@@ -639,14 +655,16 @@ public class MainAdventure {
                         }
                         break;
                     } else if(actionNumber == 1){
-                        System.out.println("Which character would you like to heal?\n0 | Player 1\n1 | Player 2\n2 | Player 3");
+                        System.out.println("Which character would you like to heal?\n0 | " + party.get(0).getName() + "\n1 | " 
+                                                                                            + party.get(1).getName() + "\n2 | "
+                                                                                            + party.get(2).getName());
                         actionNumber = kb.nextInt();
                         if(actionNumber == 0){
                             party.get(0).heal(p.healingSpell());
                         } else if(actionNumber == 1){
-                            party.get(1).takeDmg(p.healingSpell());
+                            party.get(1).heal(p.healingSpell());
                         } else if(actionNumber == 2){
-                            party.get(2).takeDmg(p.healingSpell());
+                            party.get(2).heal(p.healingSpell());
                         } else {
                             throw new InvalidMoveException();
                         }
@@ -659,6 +677,8 @@ public class MainAdventure {
                     }
                 }catch(InvalidMoveException ime){
                     System.out.println("Please input a valid move.");
+                    System.out.println("\nWhat action would you like to do?");
+                    System.out.println("0 | Swing Mace\n1 | Healing Spell\n2 | Defend");
                 }catch(Exception e){
                     System.out.println(e.getMessage());
                 }
