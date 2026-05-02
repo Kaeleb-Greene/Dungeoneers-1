@@ -10,6 +10,7 @@ public class MainAdventure {
         //        pause? (includes exit game, settings, return to game), check stats
         // Create characters, turn order, receive health changes/effects
         ArrayList<Player> party = createParty(kb);
+        ArrayList<Player> revivalParty = party;
         //ArrayList<Adventurer> unconscious = new ArrayList<Adventurer>();
         boolean gameLost = false;
         int dungeonLevel = 1;
@@ -22,7 +23,7 @@ public class MainAdventure {
             while (!levelCleared && !gameLost){
                 for (Entity person: entities){
                     if(person.isMonster()){
-                        computerAction((Monster) person, monsters, party);
+                        party = computerAction((Monster) person, monsters, party);
                     } else {
                         System.out.println("Your Party: ");
                         for (Player player: party){
@@ -41,25 +42,11 @@ public class MainAdventure {
                     }
                     if (monsters.size() == 0){
                         levelCleared = true;
-                        // Loops through the party, restoring their hp
-                        for(Player player : party){
-                            if(player.getSubClass().equals("Knight")){
-                                player.setHp(14);
-                            } else if (player.getSubClass().equals("Cleric")){
-                                player.setHp(12);
-                            } else if (player.getSubClass().equals("Alchemist")){
-                                player.setHp(10);
-                            } else if (player.getSubClass().equals("Wizard")){
-                                player.setHp(8);
-                            } else {
-                                // Rogue
-                                player.setHp(6);
-                            }
-                        }
-                        dungeonLevel ++;
+                        // Restores party hp and revives dead party members
+                        party = revivalParty;
+                        dungeonLevel++;
                         break;
                     }
-        
                 }
             }
                 
@@ -384,8 +371,8 @@ public class MainAdventure {
 
     //Miles
     //determines who the AI will attack in combat
-    public static void computerAction(Monster m, ArrayList<Monster> monsters, ArrayList<Player> party){
-       if (m.getHp() > 0){
+    public static ArrayList<Player> computerAction(Monster m, ArrayList<Monster> monsters, ArrayList<Player> party){
+        if (m.getHp() > 0){
         int damage = m.getDmg();
             if(m.getType().equals("Megaknight")){
                 party.get(0).takeDmg(damage);
@@ -426,14 +413,23 @@ public class MainAdventure {
                         System.out.println(party.get(randomPartyMember) + " is poisoned for 3 turns!\n");
                     }
                 }
-
             }
-       }
+        }
+        ArrayList<Player> tempParty = new ArrayList<Player>();
+        for(Player player : party){
+            if(player.getHp() > 0){
+                tempParty.add(player);
+            }
+        }
+        return tempParty;
     }
 
     //Miles
     //prompts actions from a player based on that players subclass
     public static ArrayList<Monster> takeAction(Player player, ArrayList<Monster> monsters, ArrayList<Player> party, Scanner kb){
+        if(player.getHp() <= 0){
+            return monsters;
+        }
         int actionNumber;
         System.out.println("\nWhat action would you like to do?");
         if(player.getSubClass().equals("Knight")){
