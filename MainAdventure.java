@@ -2,7 +2,6 @@ import java.util.Scanner;
 import java.io.File;
 import java.util.ArrayList;
 public class MainAdventure {
-
     //Miles/Nathan
     public static void main(String[] args){
         Scanner kb = new Scanner(System.in);
@@ -10,8 +9,6 @@ public class MainAdventure {
         //        pause? (includes exit game, settings, return to game), check stats
         // Create characters, turn order, receive health changes/effects
         ArrayList<Player> party = createParty(kb);
-        ArrayList<Player> revivalParty = party;
-        //ArrayList<Adventurer> unconscious = new ArrayList<Adventurer>();
         boolean gameLost = false;
         int dungeonLevel = 1;
         while (!gameLost){
@@ -22,7 +19,14 @@ public class MainAdventure {
 
             while (!levelCleared && !gameLost){
                 for (Entity person: entities){
+                    for(Player player : party){
+                        if(player.getHp() < 0){
+                            player.setHp(0);
+                        }
+                    }
                     if(person.isMonster()){
+                        Monster currentEnemy = (Monster)person;
+                        System.out.println("\n"+currentEnemy.getName() + " the " + currentEnemy.getType() + "'s turn!");
                         party = computerAction((Monster) person, monsters, party);
                     } else {
                         System.out.println("Your Party: ");
@@ -33,17 +37,19 @@ public class MainAdventure {
                         for (Monster monster: monsters){
                             System.out.println(monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
                         }
+                        Player currentPlayer = (Player)person;
+                        System.out.println("\n"+currentPlayer.getName() + " the " + currentPlayer.getSubClass() + "'s turn!");
                         monsters = takeAction((Player) person, monsters, party, kb);
                     }
-                    if (party.isEmpty()){
+                    if (party.get(0).getHp() <= 0 && party.get(1).getHp() <= 0 && party.get(2).getHp() <= 0){
                         gameLost = true;
-                        System.out.println("\nSorry! Better luck next time!");
+                        System.out.println("Oh no, your entire party is unconscious!");
+                        System.out.println("You cleared a total of " + (dungeonLevel-1) + " floors.");
                         break;
                     }
                     if (monsters.size() == 0){
                         levelCleared = true;
                         // Restores party hp and revives dead party members
-                        party = revivalParty;
                         dungeonLevel++;
                         break;
                     }
@@ -375,9 +381,12 @@ public class MainAdventure {
         if (m.getHp() > 0){
         int damage = m.getDmg();
             if(m.getType().equals("Megaknight")){
-                party.get(0).takeDmg(damage);
-                party.get(1).takeDmg(damage);
-                party.get(2).takeDmg(damage);
+                if(party.get(0).getHp() > 0)
+                    party.get(0).takeDmg(damage);
+                if(party.get(1).getHp() > 0)
+                    party.get(1).takeDmg(damage);
+                if(party.get(2).getHp() > 0)
+                    party.get(2).takeDmg(damage);
                 System.out.println(m.getName() + " the Megaknight dealt " + damage + " to all players!\n");
             } else {
                 int randomPartyMember = 0;
@@ -395,13 +404,15 @@ public class MainAdventure {
                         }
                         iterations++;
                     }
-                    if(party.get(randomPartyMember).getSubClass().equals("Rogue")){
-                        if((int)(2*Math.random()) == 0){
-                            // sneak fails to work
+                    if(party.get(randomPartyMember).getHp() > 0){
+                        if(party.get(randomPartyMember).getSubClass().equals("Rogue")){
+                            if((int)(2*Math.random()) == 0){
+                                // sneak fails to work
+                                break;
+                            }
+                        } else {
                             break;
                         }
-                    } else {
-                        break;
                     }
                 }
                 System.out.println("\n" + m.getName() + " the " + m.getType() + " dealt " + damage + " damage to " + party.get(randomPartyMember).getName() + ".\n");
@@ -415,19 +426,14 @@ public class MainAdventure {
                 }
             }
         }
-        ArrayList<Player> tempParty = new ArrayList<Player>();
-        for(Player player : party){
-            if(player.getHp() > 0){
-                tempParty.add(player);
-            }
-        }
-        return tempParty;
+        return party;
     }
 
     //Miles
     //prompts actions from a player based on that players subclass
     public static ArrayList<Monster> takeAction(Player player, ArrayList<Monster> monsters, ArrayList<Player> party, Scanner kb){
         if(player.getHp() <= 0){
+            System.out.println("\nBut they were unresponsive...");
             return monsters;
         }
         int actionNumber;
