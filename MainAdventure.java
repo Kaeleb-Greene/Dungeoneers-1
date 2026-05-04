@@ -430,7 +430,6 @@ public class MainAdventure {
                             if(((Knight)player).getIsTaunting()){
                                 if((int)(2*Math.random()) == 0){
                                     // taunt works
-                                    System.out.println("Successfully taunted!");
                                     randomPartyMember = iterations;
                                 }
                             }
