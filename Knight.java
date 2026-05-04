@@ -4,7 +4,12 @@ public class Knight extends Player{
     public Knight(String name){
         super(name, 14, 4, 0, "Knight", false, false,0);
     }
-    
+    // This constructor will make a bit more sense if you input a String on the class selection screen...
+    // - Miles
+    public Knight(String name, int dmg){
+        super(name, 14, dmg, 0, "Knight", false, false,0);
+    }
+
     //creates new instance variable boolean that is set to false by default
     boolean isTaunting = false;
 
