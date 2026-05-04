@@ -6,14 +6,16 @@ public class Alchemist extends Player {
     }
 
     //random attack; randomly returns raw dmg, applies poison to target, or weakens the target; on weakened target does only 1 dmg for their next attack
-    public int throwPotion(){
-        int Haselhoff  = ((int)(3 * Math.random()));
+    public int throwPotion(Entity e){
+        int Haselhoff  = ((int)(2 * Math.random()));
         if(Haselhoff == 0){
+            System.out.println("\nA harming potion has been thrown!\n");
             return getDmg();
-        } else if(Haselhoff == 1){
-            return poisonAttack();
-        } else {
-            return 0;
+        } else {//(Haselhoff == 1)
+            System.out.println("\nA poison potion has been thrown!");
+            System.out.println("The enemy has been poisoned!\n");
+            return poisonAttack(e);
+        
         }
     }
 

@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
-import java.io.EOFException;
+
 public class MainAdventure {
     //Miles/Nathan
     public static void main(String[] args){
@@ -16,12 +16,13 @@ public class MainAdventure {
         //        pause? (includes exit game, settings, return to game), check stats
         //Create characters, turn order, receive health changes/effects
         ArrayList<Player> party = createParty(kb);
+        // Either this value is one or it is the value from the loaded save.
+        int dungeonLevel = party.get(0).getFloor();
         boolean gameLost = false;
-        int dungeonLevel = 1;
         while (!gameLost){
             ArrayList<Monster> monsters = createLevel(dungeonLevel, kb);
             boolean levelCleared = false;
-            System.out.println("\nWelcome to Level " + dungeonLevel + "\n");
+            System.out.println("\nWelcome to Level " + dungeonLevel + "!\n");
             ArrayList<Entity> entities = determineOrder(party, monsters, kb);
 
             while (!levelCleared && !gameLost){
@@ -38,11 +39,21 @@ public class MainAdventure {
                     } else {
                         System.out.println("Your Party: ");
                         for (Player player: party){
-                            System.out.println(player.getName() + " the " + player.getSubClass() + ": " + player.getHp() + " health");
+                            System.out.print(player.getName() + " the " + player.getSubClass() + ": " + player.getHp() + " health");
+                            if (player.getIsPoisoned()){
+                                System.out.println(" (Poisoned)");
+                            } else{
+                                System.out.println();
+                            }
                         }
                         System.out.println("\nMonster List: ");
                         for (Monster monster: monsters){
-                            System.out.println(monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
+                            System.out.print(monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
+                            if (monster.getIsPoisoned()){
+                                System.out.println(" (Poisoned)");
+                            } else{
+                                System.out.println();
+                            }
                         }
                         Player currentPlayer = (Player)person;
                         System.out.println("\n"+currentPlayer.getName() + " the " + currentPlayer.getSubClass() + "'s turn!");
@@ -58,6 +69,23 @@ public class MainAdventure {
                         levelCleared = true;
                         // Restores party hp and revives dead party members
                         dungeonLevel++;
+                        // heals all players
+                        for(Player player : party){
+                            if(player.getSubClass().equals("Knight")){
+                                player.setHp(14);
+                            } else if(player.getSubClass().equals("Cleric")){
+                                player.setHp(12);
+                            } else if(player.getSubClass().equals("Alchemist")){
+                                player.setHp(10);
+                            } else if(player.getSubClass().equals("Wizard")){
+                                player.setHp(8);
+                            } else if(player.getSubClass().equals("Rogue")){
+                                player.setHp(6);
+                            }
+                            player.setIsPoisoned(false);
+                            player.setPoisonTurnsLeft(0);
+                            player.setIsDefending(false);
+                        }
                         break;
                     }
                 }
@@ -70,13 +98,12 @@ public class MainAdventure {
                 if((answer.equals("yes") || answer.equals("Yes") || answer.equals("YES") || answer.equals("Y") || answer.equals("y"))){
                     // The player did not actually lose the game, but this breaks the loop. It will be reset when they load their save.
                     gameLost = true;
-                    String save = party.get(0).getSubClass()
+                    String save = party.get(0).getSubClass() + "\n"
                                 + party.get(0).getName() + "\n"
-                                + party.get(1).getSubClass()
+                                + party.get(1).getSubClass() + "\n"
                                 + party.get(1).getName() + "\n"
-                                + party.get(2).getSubClass()
-                                + party.get(2).getName()
-                                + "\n"
+                                + party.get(2).getSubClass() + "\n"
+                                + party.get(2).getName() + "\n"
                                 + dungeonLevel;
                     saveToBinaryFile(save);
                 }
@@ -91,7 +118,7 @@ public class MainAdventure {
     public static ArrayList<Player> createParty(Scanner kb){
         int fileChoice = -1;
         ArrayList<Player> party = new ArrayList<Player>(3);
-        System.out.println("Welcome to Dungeoneers! \n (1) Start New Game \n (2) Load Save?");
+        System.out.println("Welcome to Dungeoneers! \n (1) Start New Game \n (2) Load Save");
         while (fileChoice != 1 && fileChoice != 2){
             fileChoice = kb.nextInt();
             
@@ -129,26 +156,26 @@ public class MainAdventure {
                     String nextName = kb.nextLine();
                     if (nextClassChoice == 1){
                         party.add(new Knight(nextName));
-                        System.out.println("Successfully added Player " + i + ": " + nextName + " the Knight!");
+                        System.out.println("Welcome, Player " + i + ": " + nextName + " the Knight!");
                     } else if (nextClassChoice == 2){
                         party.add(new Rogue(nextName));
-                        System.out.println("Successfully added Player " + i + ": " + nextName + " the Rogue!");
+                        System.out.println("Welcome, Player " + i + ": " + nextName + " the Rogue!");
                     } else if (nextClassChoice == 3){
                         party.add(new Wizard(nextName));
-                        System.out.println("Successfully added Player " + i + ": " + nextName + " the Wizard!");
+                        System.out.println("Welcome, Player " + i + ": " + nextName + " the Wizard!");
                     } else if (nextClassChoice == 4){
                         party.add(new Alchemist(nextName));
-                        System.out.println("Successfully added Player " + i + ": " + nextName + " the Alchemist!");
+                        System.out.println("Welcome, Player " + i + ": " + nextName + " the Alchemist!");
                     } else if (nextClassChoice == 5){
                         party.add(new Cleric(nextName));
-                        System.out.println("Successfully added Player " + i + ": " + nextName + " the Cleric!");
+                        System.out.println("Welcome, Player " + i + ": " + nextName + " the Cleric!");
                     } else if (nextClassChoice == 6){
                         party.add(new Knight(nextName, 1));
-                        System.out.println("Successfully added Player " + i + ": " + nextName + " the Knight!");
+                        System.out.println("Welcome, Player " + i + ": " + nextName + " the Knight!");
                     }
                 }
             } else { // if fileChoice == 2
-                readSaveFromBinaryFile();
+                party = readSaveFromBinaryFile();
                 return party;
 
             }
@@ -403,6 +430,7 @@ public class MainAdventure {
                             if(((Knight)player).getIsTaunting()){
                                 if((int)(2*Math.random()) == 0){
                                     // taunt works
+                                    System.out.println("Successfully taunted!");
                                     randomPartyMember = iterations;
                                 }
                             }
@@ -454,7 +482,7 @@ public class MainAdventure {
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp() + "hp");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "hp");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -467,6 +495,7 @@ public class MainAdventure {
                         } else {
                             throw new InvalidMoveException();
                         }
+                        System.out.println("Dealt " + player.getDmg() + " damage!");
                         break;
                     } else if(actionNumber == 1){
                         p.taunt();
@@ -492,23 +521,24 @@ public class MainAdventure {
                 actionNumber = kb.nextInt();
                 try{
                     if(actionNumber == 0){
-                        System.out.println("Which enemy would you like to hit?");
+                        System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp() + " hp");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "hp");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
                         // POISON EFFECT?
                         if(actionNumber == 0){
-                            monsters.get(0).takeDmg(p.poisonDagger());
+                            monsters.get(0).takeDmg(p.poisonDagger(monsters.get(0)));
                         } else if(actionNumber == 1){
-                            monsters.get(1).takeDmg(p.poisonDagger());
+                            monsters.get(1).takeDmg(p.poisonDagger(monsters.get(1)));
                         } else if(actionNumber == 2){
-                            monsters.get(2).takeDmg(p.poisonDagger());
+                            monsters.get(2).takeDmg(p.poisonDagger(monsters.get(2)));
                         } else {
                             throw new InvalidMoveException();
                         }
+                        System.out.println("Dealt " + player.getDmg() + " damage!");
                         break;
                     } else if(actionNumber == 1){
                         for(Monster monster : monsters)
@@ -536,10 +566,10 @@ public class MainAdventure {
                 actionNumber = kb.nextInt();
                 try{
                     if(actionNumber == 0){
-                        System.out.println("Which enemy would you like to hit?");
+                        System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp() + "hp");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "hp");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -552,11 +582,13 @@ public class MainAdventure {
                         } else {
                             throw new InvalidMoveException();
                         }
+                        System.out.println(monsters.get(actionNumber).getName() + " the " + monsters.get(actionNumber).getType() + " took 5 damage!");
                         break;
-                    } else if(actionNumber == 1){System.out.println("Which enemy would you like to hit?");
+                    } else if(actionNumber == 1){
+                        System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp() + "hp");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "hp");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -591,27 +623,28 @@ public class MainAdventure {
                 actionNumber = kb.nextInt();
                 try{
                     if(actionNumber == 0){
-                        System.out.println("Which enemy would you like to hit?");
+                        System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp() + "hp");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "hp");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
                         if(actionNumber == 0){
-                            monsters.get(0).takeDmg(p.throwPotion());
+                            monsters.get(0).takeDmg(p.throwPotion(monsters.get(0)));
                         } else if(actionNumber == 1){
-                            monsters.get(1).takeDmg(p.throwPotion());
+                            monsters.get(1).takeDmg(p.throwPotion(monsters.get(1)));
                         } else if(actionNumber == 2){
-                            monsters.get(2).takeDmg(p.throwPotion());
+                            monsters.get(2).takeDmg(p.throwPotion(monsters.get(2)));
                         } else {
                             throw new InvalidMoveException();
                         }
+                        System.out.println(monsters.get(actionNumber).getName() + " the " + monsters.get(actionNumber).getType() + " took 2 damage!");
                         break;
                     } else if(actionNumber == 1){
-                        System.out.println("Which character would you like to heal?\n0 | " + party.get(0).getName() + "\n1 | " 
-                                                                                            + party.get(1).getName() + "\n2 | "
-                                                                                            + party.get(2).getName());
+                        System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + "\n1 | " 
+                                                                                            + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(0).getHp() + "\n2 | "
+                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(0).getHp());
                         actionNumber = kb.nextInt();
                         if(actionNumber == 0){
                             party.get(0).heal(p.healingPotion());
@@ -622,6 +655,8 @@ public class MainAdventure {
                         } else {
                             throw new InvalidMoveException();
                         }
+                        System.out.println(party.get(actionNumber).getName() + " the " + party.get(actionNumber).getSubClass() + 
+                            " is now at " + party.get(actionNumber).getHp() + " health!");
                         break;
                     } else if(actionNumber == 2){
                         p.Defend();
@@ -644,10 +679,10 @@ public class MainAdventure {
                 actionNumber = kb.nextInt();
                 try{
                     if(actionNumber == 0){
-                        System.out.println("Which enemy would you like to hit?");
+                        System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getType() + " | " + monster.getHp() + "hp");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "hp");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -660,11 +695,12 @@ public class MainAdventure {
                         } else {
                             throw new InvalidMoveException();
                         }
+                        System.out.println("Dealt " + player.getDmg() + " damage!");
                         break;
                     } else if(actionNumber == 1){
-                        System.out.println("Which character would you like to heal?\n0 | " + party.get(0).getName() + "\n1 | " 
-                                                                                            + party.get(1).getName() + "\n2 | "
-                                                                                            + party.get(2).getName());
+                          System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + "\n1 | " 
+                                                                                            + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(0).getHp() + "\n2 | "
+                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(0).getHp());
                         actionNumber = kb.nextInt();
                         if(actionNumber == 0){
                             party.get(0).heal(p.healingSpell());
@@ -675,6 +711,8 @@ public class MainAdventure {
                         } else {
                             throw new InvalidMoveException();
                         }
+                        System.out.println(party.get(actionNumber).getName() + " the " + party.get(actionNumber).getSubClass() + 
+                            " is now at " + party.get(actionNumber).getHp() + " health!");
                         break;
                     } else if(actionNumber == 2){
                         p.Defend();
@@ -725,9 +763,10 @@ public class MainAdventure {
     public static void poisonCheck(Entity Entity){
         if(Entity.getIsPoisoned() == true){
             Entity.takeDmg(1);
+            System.out.println(Entity.getName() + " took poison damage!\n");
             Entity.setPoisonTurnsLeft(Entity.getPoisonTurnsLeft()-1);
         }
-    }
+    } 
     public static void saveToBinaryFile(String text){
         try{
             FileOutputStream fos = new FileOutputStream("save.obj", false);
@@ -741,27 +780,44 @@ public class MainAdventure {
             System.out.println(ioe.getMessage());        
         }
     }
-    public static void readSaveFromBinaryFile(){
+    public static ArrayList<Player> readSaveFromBinaryFile(){
+        ArrayList<Player> party = new ArrayList<Player>();
         try { // outer try/catch to handle IO
             FileInputStream fis = new FileInputStream("save.obj");
             ObjectInputStream ois = new ObjectInputStream(fis);
+            String type = (String)ois.readObject();
+            Scanner typeScan = new Scanner(type);
             try { // inner try/catch to handle reading from the file
-                while (true){
-                    System.out.println(ois.readObject());
+                for(int i = 0;i<3;i++){
+                    String thisSubClass = typeScan.nextLine();
+                    String thisName = typeScan.nextLine();
+                    if(thisSubClass.equals("Knight")){
+                        party.add(new Knight(thisName));
+                    } else if(thisSubClass.equals("Rogue")){
+                        party.add(new Rogue(thisName));
+                    } else if(thisSubClass.equals("Wizard")){
+                        party.add(new Wizard(thisName));
+                    } else if(thisSubClass.equals("Alchemist")){
+                        party.add(new Alchemist(thisName));
+                    } else {
+                        party.add(new Cleric(thisName));
+                    }
                 }
-            } catch (EOFException eofe){
-                System.out.println("End of file reached");
-            } catch (ClassNotFoundException cnfe){
-                System.out.println("Couldn't convert binaries to FlightRecord class");
-                System.out.println(cnfe.getMessage());
+                System.out.println("Save file successfully read.");
+                int floor = typeScan.nextInt();
+                party.get(0).setFloor(floor);
+            } catch (Exception e){
+                System.out.println(e.getMessage());
             } finally {
-                System.out.println("Closing file...");
                 ois.close();
+                typeScan.close();
             }
         } catch (FileNotFoundException fnfe){
             System.out.println(fnfe.getMessage());
         } catch (Exception e){
             e.printStackTrace();
         }
+        return party;
     }
 }
+

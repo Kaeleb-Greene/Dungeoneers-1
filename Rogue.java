@@ -6,8 +6,8 @@ public class Rogue extends Player {
     }
 
     //single hit attack; applies poison status to the target
-    public int poisonDagger(){
-        return poisonAttack();
+    public int poisonDagger(Entity e){
+        return poisonAttack(e);
     }
 
     //multi hit attack; does dmg to all enemies

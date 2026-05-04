@@ -13,8 +13,10 @@ public class Wizard extends Player {
     //gamblers attack; randomly does either 1 dmg or doubles base dmg
     public int vegasFireball(){
         if((int)(2 * Math.random()) == 0){
+            System.out.println("Unlucky! Only did 1 damage!\n");
             return getDmg()/5;
         } else {
+            System.out.println("Nice shot! You got a critical hit for 10 damage!\n");
             return getDmg()*2;
         }
     }

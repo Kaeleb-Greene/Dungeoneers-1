@@ -5,6 +5,7 @@ public abstract class Entity {
     private int dmg;
     private boolean isPoisoned;
     private int poisonTurnsLeft;
+    private int floor = 1;
 
     public Entity(String name, int hp, int dmg, boolean isPoisoned, int poisonTurnsLeft){
         this.name = name;
@@ -19,12 +20,14 @@ public abstract class Entity {
     public int getHp(){ return hp; }
     public int getDmg(){ return dmg; }
     public Boolean getIsPoisoned(){ return isPoisoned; }
+    public int getFloor(){ return floor; }
 
     //setters
     public void setName(String name){ this.name = name; }
     public void setHp(int hp){ this.hp = hp; }
     public void setDmg(int dmg){ this.dmg = dmg; }
     public void setIsPoisoned(boolean isPoisoned){ this.isPoisoned = isPoisoned; }
+    public void setFloor(int floor){ this.floor = floor; }
 
     public int getPoisonTurnsLeft(){return poisonTurnsLeft;}
     public void setPoisonTurnsLeft(int poisonTurnsLeft){this.poisonTurnsLeft = poisonTurnsLeft;}
@@ -48,9 +51,9 @@ public abstract class Entity {
     }
 
     //tick attack type; returns dmg as well as applies poison to target
-    public int poisonAttack(){
+    public int poisonAttack(Entity e){
         //if poisoned = true; do 1 additional dmg every turn for the next 3 turns
-        setIsPoisoned(true);
+        e.setIsPoisoned(true);
         return getDmg();
     }
 
