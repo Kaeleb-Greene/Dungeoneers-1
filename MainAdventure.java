@@ -1,6 +1,13 @@
 import java.util.Scanner;
 import java.io.File;
 import java.util.ArrayList;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.EOFException;
 public class MainAdventure {
     //Miles/Nathan
     public static void main(String[] args){
@@ -63,17 +70,15 @@ public class MainAdventure {
                 if((answer.equals("yes") || answer.equals("Yes") || answer.equals("YES") || answer.equals("Y") || answer.equals("y"))){
                     // The player did not actually lose the game, but this breaks the loop. It will be reset when they load their save.
                     gameLost = true;
-                    // temp
-                    String save = vigenereCipher(linearCipher(party.get(0).getSubClass()
-                                                            + party.get(0).getName()
-                                                            + "\n"
-                                                            + party.get(1).getSubClass()
-                                                            + party.get(1).getName()
-                                                            + "\n"
-                                                            + party.get(2).getSubClass()
-                                                            + party.get(2).getName()
-                                                            + "\n"
-                                                            + dungeonLevel, true),true);
+                    String save = party.get(0).getSubClass()
+                                + party.get(0).getName() + "\n"
+                                + party.get(1).getSubClass()
+                                + party.get(1).getName() + "\n"
+                                + party.get(2).getSubClass()
+                                + party.get(2).getName()
+                                + "\n"
+                                + dungeonLevel;
+                    saveToBinaryFile(save);
                 }
             }
         }
@@ -143,7 +148,7 @@ public class MainAdventure {
                     }
                 }
             } else { // if fileChoice == 2
-                //Come back to this
+                readSaveFromBinaryFile();
                 return party;
 
             }
@@ -723,4 +728,41 @@ public class MainAdventure {
             Entity.setPoisonTurnsLeft(Entity.getPoisonTurnsLeft()-1);
         }
     } 
+}
+
+public static void saveToBinaryFile(String text){
+    try{
+        FileOutputStream fos = new FileOutputStream("save.obj", false);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(text);
+        oos.close();
+        System.out.println("Binary File successfully written");
+    } catch (FileNotFoundException fnfe){
+        System.out.println(fnfe.getMessage());
+    } catch (IOException ioe){
+        System.out.println(ioe.getMessage());        
+    }
+}
+public static void readSaveFromBinaryFile(){
+    try { // outer try/catch to handle IO
+        FileInputStream fis = new FileInputStream("save.obj");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        try { // inner try/catch to handle reading from the file
+            while (true){
+                System.out.println(ois.readObject());
+            }
+        } catch (EOFException eofe){
+            System.out.println("End of file reached");
+        } catch (ClassNotFoundException cnfe){
+            System.out.println("Couldn't convert binaries to FlightRecord class");
+            System.out.println(cnfe.getMessage());
+        } finally {
+            System.out.println("Closing file...");
+            ois.close();
+        }
+    } catch (FileNotFoundException fnfe){
+        System.out.println(fnfe.getMessage());
+    } catch (Exception e){
+        e.printStackTrace();
+    }
 }
