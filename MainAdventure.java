@@ -727,42 +727,41 @@ public class MainAdventure {
             Entity.takeDmg(1);
             Entity.setPoisonTurnsLeft(Entity.getPoisonTurnsLeft()-1);
         }
-    } 
-}
-
-public static void saveToBinaryFile(String text){
-    try{
-        FileOutputStream fos = new FileOutputStream("save.obj", false);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(text);
-        oos.close();
-        System.out.println("Binary File successfully written");
-    } catch (FileNotFoundException fnfe){
-        System.out.println(fnfe.getMessage());
-    } catch (IOException ioe){
-        System.out.println(ioe.getMessage());        
     }
-}
-public static void readSaveFromBinaryFile(){
-    try { // outer try/catch to handle IO
-        FileInputStream fis = new FileInputStream("save.obj");
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        try { // inner try/catch to handle reading from the file
-            while (true){
-                System.out.println(ois.readObject());
-            }
-        } catch (EOFException eofe){
-            System.out.println("End of file reached");
-        } catch (ClassNotFoundException cnfe){
-            System.out.println("Couldn't convert binaries to FlightRecord class");
-            System.out.println(cnfe.getMessage());
-        } finally {
-            System.out.println("Closing file...");
-            ois.close();
+    public static void saveToBinaryFile(String text){
+        try{
+            FileOutputStream fos = new FileOutputStream("save.obj", false);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(text);
+            oos.close();
+            System.out.println("Binary File successfully written");
+        } catch (FileNotFoundException fnfe){
+            System.out.println(fnfe.getMessage());
+        } catch (IOException ioe){
+            System.out.println(ioe.getMessage());        
         }
-    } catch (FileNotFoundException fnfe){
-        System.out.println(fnfe.getMessage());
-    } catch (Exception e){
-        e.printStackTrace();
+    }
+    public static void readSaveFromBinaryFile(){
+        try { // outer try/catch to handle IO
+            FileInputStream fis = new FileInputStream("save.obj");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            try { // inner try/catch to handle reading from the file
+                while (true){
+                    System.out.println(ois.readObject());
+                }
+            } catch (EOFException eofe){
+                System.out.println("End of file reached");
+            } catch (ClassNotFoundException cnfe){
+                System.out.println("Couldn't convert binaries to FlightRecord class");
+                System.out.println(cnfe.getMessage());
+            } finally {
+                System.out.println("Closing file...");
+                ois.close();
+            }
+        } catch (FileNotFoundException fnfe){
+            System.out.println(fnfe.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
