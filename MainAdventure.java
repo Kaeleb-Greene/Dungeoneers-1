@@ -8,7 +8,7 @@ public class MainAdventure {
         Scanner kb = new Scanner(System.in);
         //List of actions: move, open inventory, attack 1, special attack, 
         //        pause? (includes exit game, settings, return to game), check stats
-        // Create characters, turn order, receive health changes/effects
+        //Create characters, turn order, receive health changes/effects
         ArrayList<Player> party = createParty(kb);
         //ArrayList<Adventurer> unconscious = new ArrayList<Adventurer>();
         boolean gameLost = false;
