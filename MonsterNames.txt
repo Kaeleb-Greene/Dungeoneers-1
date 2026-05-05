@@ -1,5 +1,5 @@
 Landon
-Hosper
+Hospers
 Jill
 Evil Miles
 Gregg Christy
@@ -45,7 +45,6 @@ Frank
 Ryan
 QWERTY
 Meek
-Kaarina
 Nigel Richards
 Monster.java
 Gotham
@@ -57,7 +56,7 @@ InsertNameHere
 Brennan
 Garry
 Julius
-Caeser
+Caesar
 Larry
 Landon
 Landon
@@ -78,3 +77,24 @@ Arasaka
 WASD
 Octavius
 Landon
+Ethan
+Wasted
+College Tuition
+Chessmaster6000
+Decaf Coffee
+Cookie Monster
+Evil Geary
+Garrett Gerber
+Landon
+Fern
+Smith
+Bolks
+Landon
+Heemstra
+Christy
+Spider-Man
+Chicken Jockey
+Herobrine
+Jason Momoa
+;)
+Steve

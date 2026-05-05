@@ -718,7 +718,7 @@ public class MainAdventure {
     public static String getMonsterName(){
         Scanner kb = null;
         try {
-            int randNum = (int)(80*Math.random());
+            int randNum = (int)(100*Math.random());
             kb = new Scanner(new File("MonsterNames.txt"));
             for(int i=0;i<randNum;i++){
                 kb.nextLine();
