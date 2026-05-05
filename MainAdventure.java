@@ -128,7 +128,7 @@ public class MainAdventure {
     public static ArrayList<Player> createParty(Scanner kb){
         int fileChoice = -1;
         ArrayList<Player> party = new ArrayList<Player>(3);
-        System.out.println("Welcome to Dungeoneers! \n (1) Start New Game \n (2) Load Save");
+        System.out.println("Welcome to Dungeoneers! \n 1 | Start New Game \n 2 | Load Save");
         while (fileChoice != 1 && fileChoice != 2){
             fileChoice = kb.nextInt();
             
@@ -137,14 +137,14 @@ public class MainAdventure {
                 //Name, subClass
                 for (int i = 1; i <= 3; i++){
                     System.out.println("\nPlayer " + i + ", Choose Your Subclass!");
-                    System.out.println("(1) Knight: Slash your enemies with the sword! Save " +
+                    System.out.println("1 | Knight: Slash your enemies with the sword! Save " +
                         "your teammates by taunting enemies to attack you! Most health!");
-                    System.out.println("(2) Rogue: Sneak past your enemies! Poison an enemy with " +
+                    System.out.println("2 | Rogue: Sneak past your enemies! Poison an enemy with " +
                         "your dagger or quickly stab multiple in one turn! Least health!"); 
-                    System.out.println("(3) Wizard: Roast your enemies with Fireballs! Vegas Fireball can do huge damage-- if you're lucky... Low health!");
-                    System.out.println("(4) Alchemist: Use potions to disable your opponents! " +
+                    System.out.println("3 | Wizard: Roast your enemies with Fireballs! Vegas Fireball can do huge damage-- if you're lucky... Low health!");
+                    System.out.println("4 | Alchemist: Use potions to disable your opponents! " +
                         "Poison them over time, weaken their attacks, or just damage them. Medium health");
-                    System.out.println("(5) Cleric: Bash enemies with your mace! Heal your allies! " +
+                    System.out.println("5 | Cleric: Bash enemies with your mace! Heal your allies! " +
                         "High health.");
                     int nextClassChoice = 0;
                     while(nextClassChoice > 5 || nextClassChoice < 1){
@@ -447,7 +447,7 @@ public class MainAdventure {
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "health");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
                             iterations++;
                         }
                         try {
@@ -523,7 +523,7 @@ public class MainAdventure {
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "health");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
                             iterations++;
                         }
                         try {
@@ -602,7 +602,7 @@ public class MainAdventure {
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "health");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
                             iterations++;
                         }
                         try {
@@ -637,7 +637,7 @@ public class MainAdventure {
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "health");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
                             iterations++;
                         }
                         try {
@@ -709,7 +709,7 @@ public class MainAdventure {
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "health");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
                             iterations++;
                         }
                         try {
@@ -744,28 +744,12 @@ public class MainAdventure {
                         System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + " health" + "\n1 | " 
                                                                                             + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
                                                                                             + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + "health");
-                        try {
-                            actionNumber = kb.nextInt();
-                        } catch (Exception e) {
-                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
-                            String save = party.get(0).getSubClass() + "\n"
-                                        + party.get(0).getName() + "\n"
-                                        + party.get(1).getSubClass() + "\n"
-                                        + party.get(1).getName() + "\n"
-                                        + party.get(2).getSubClass() + "\n"
-                                        + party.get(2).getName() + "\n"
-                                        + dungeonLevel;
-                            saveToBinaryFile(save);
-                            for(Player member : party){
-                                member.setHp(0);
-                            }
-                            break;
-                        }
+                        actionNumber = kb.nextInt();
                         while (party.get(actionNumber).getHp() <= 0){
                             System.out.println("You can't raise the dead. Try someone alive.");
                             System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + " health" + "\n1 | " 
                                                                                             + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
-                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + "health");
+                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + " health");
                             
                             try {
                             actionNumber = kb.nextInt();
@@ -795,7 +779,7 @@ public class MainAdventure {
                         throw new InvalidMoveException();
                     } 
                     System.out.println(party.get(actionNumber).getName() + " the " + party.get(actionNumber).getSubClass() + 
-                        " is now at " + party.get(actionNumber).getHp() + " health!");
+                        " is now at " + party.get(actionNumber).getHp() + " health!\n");
                     break;
                 } else if(actionNumber == 2){
                         p.Defend();
@@ -839,7 +823,7 @@ public class MainAdventure {
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "health");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
                             iterations++;
                         }
                         try {
@@ -895,7 +879,7 @@ public class MainAdventure {
                             System.out.println("You can't raise the dead. Try someone alive.");
                             System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + " health" + "\n1 | " 
                                                                                             + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
-                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + "health");
+                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + " health");
                             
                            try {
                                 actionNumber = kb.nextInt();
@@ -925,7 +909,7 @@ public class MainAdventure {
                             throw new InvalidMoveException();
                         }
                         System.out.println(party.get(actionNumber).getName() + " the " + party.get(actionNumber).getSubClass() + 
-                            " is now at " + party.get(actionNumber).getHp() + " health!");
+                            " is now at " + party.get(actionNumber).getHp() + " health!\n");
                         break;
                     } else if(actionNumber == 2){
                         p.Defend();
@@ -980,6 +964,9 @@ public class MainAdventure {
             Entity.takeDmg(1);
             System.out.println(Entity.getName() + " took poison damage!\n");
             Entity.setPoisonTurnsLeft(Entity.getPoisonTurnsLeft()-1);
+            if (Entity.getHp() <= 0){
+                System.out.println(Entity.getName() + " died to the poison!\n");
+            }
         }
     } 
     public static void saveToBinaryFile(String text){
@@ -988,7 +975,7 @@ public class MainAdventure {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(text);
             oos.close();
-            System.out.println("Binary File successfully written");
+            System.out.println("\nBinary File successfully written\n");
         } catch (FileNotFoundException fnfe){
             System.out.println(fnfe.getMessage());
         } catch (IOException ioe){
