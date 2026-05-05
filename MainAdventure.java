@@ -8,9 +8,11 @@ import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
+
 public class MainAdventure {
     //Miles/Nathan
     public static void main(String[] args){
+        System.out.println("\u001B[0m");
         Scanner kb = new Scanner(System.in);
         //List of actions: move, open inventory, attack 1, special attack, 
         //        pause? (includes exit game, settings, return to game), check stats
@@ -22,11 +24,12 @@ public class MainAdventure {
         while (!gameLost){
             ArrayList<Monster> monsters = createLevel(dungeonLevel, kb);
             boolean levelCleared = false;
-            System.out.println("\nWelcome to Level " + dungeonLevel + "!\n");
+            System.out.println("\n\u001B[32mWelcome to Level " + dungeonLevel + "!\u001B[0m\n");
             ArrayList<Entity> entities = determineOrder(party, monsters, kb);
 
             while (!levelCleared && !gameLost){
                 for (Entity person: entities){
+                    poisonCheck(person);
                     for(Player player : party){
                         if(player.getHp() < 0){
                             player.setHp(0);
@@ -34,7 +37,7 @@ public class MainAdventure {
                     }
                     if(person.isMonster()){
                         Monster currentEnemy = (Monster)person;
-                        System.out.println("\n"+currentEnemy.getName() + " the " + currentEnemy.getType() + "'s turn!");
+                        System.out.println("\n"+currentEnemy.getName() + " the " + currentEnemy.getType() + "'s turn!\n");
                         party = computerAction((Monster) person, monsters, party);
                     } else {
                         System.out.println("Your Party: ");
@@ -61,12 +64,19 @@ public class MainAdventure {
                     }
                     if (party.get(0).getHp() <= 0 && party.get(1).getHp() <= 0 && party.get(2).getHp() <= 0){
                         gameLost = true;
-                        System.out.println("Oh no, your entire party is unconscious!");
-                        System.out.println("You cleared a total of " + (dungeonLevel-1) + " floors.");
+                        System.out.println("\u001B[31mOh no, your entire party is unconscious!\u001B[0m\n\n");
+                        if (dungeonLevel <= 5){
+                            System.out.println("\u001B[31mYou cleared a total of " + (dungeonLevel-1) + " floors.\u001B[0m\n\n");
+                        } else if (dungeonLevel >= 10){
+                            System.out.println("\u001B[34mYou cleared a total of " + (dungeonLevel-1) + " floors.\u001B[0m\n\n");
+                        } else{ //6-9
+                        System.out.println("You cleared a total of " + (dungeonLevel-1) + " floors.\n\n");
+                        }
                         break;
                     }
                     if (monsters.size() == 0){
                         levelCleared = true;
+                        System.out.println("\n\u001B[32mYou completed Floor " + dungeonLevel + "!\u001B[0m\n"); 
                         // Restores party hp and revives dead party members
                         dungeonLevel++;
                         // heals all players
@@ -131,8 +141,7 @@ public class MainAdventure {
                         "your teammates by taunting enemies to attack you! Most health!");
                     System.out.println("(2) Rogue: Sneak past your enemies! Poison an enemy with " +
                         "your dagger or quickly stab multiple in one turn! Least health!"); 
-                    System.out.println("(3) Wizard: Roast your enemies with Fireballs! Magically " +
-                        "block half of damage received. Low health!");
+                    System.out.println("(3) Wizard: Roast your enemies with Fireballs! Vegas Fireball can do huge damage-- if you're lucky... Low health!");
                     System.out.println("(4) Alchemist: Use potions to disable your opponents! " +
                         "Poison them over time, weaken their attacks, or just damage them. Medium health");
                     System.out.println("(5) Cleric: Bash enemies with your mace! Heal your allies! " +
@@ -344,70 +353,6 @@ public class MainAdventure {
     }
 
     //Miles
-    //This linear cipher has a decimation of 7 and a shift of 18
-    public static String linearCipher(String s, boolean encoding){
-        ArrayList<Integer> nums = new ArrayList<Integer>();
-        // total variable that adds each character
-        String total = "";
-        if(encoding){
-            for(int i=0; i<s.length(); i++){
-                // does some operations to get a new int x corresponding to a character
-                int x = s.charAt(i);
-                x-=97;
-                x*=7;
-                x+=18;
-                nums.add(x);
-            }
-            for(int i=0; i<nums.size(); i++){
-                // does some operations to get that character to a lowercase letter
-                int y = nums.get(i);
-                y%=26;
-                y+=97;
-                total = total + (char)y;
-            }
-        } else {
-            for(int i=0; i<s.length(); i++){
-                // does some operations to get a new int x corresponding to a character
-                int x = s.charAt(i);
-                x-=97;
-                for(int j=0;j>25;j++){
-                    x*=7;
-                    x+=18;
-                    x%=26;
-                }
-                x+=97;
-                total = total + (char)x;
-            }
-        }
-        return total;
-    }
-
-    //Miles
-    //
-    public static String vigenereCipher(String s, boolean encoding){
-        // declares a total
-        String total = "";
-        // this key will be used as a shift
-        String key = "landonvanberkum";
-        for(int i=0; i<s.length(); i++){
-            // declares various different int variables
-            int x = s.charAt(i);
-            int keyNum = key.charAt(i%15);
-            int finalNum;
-            // does some operations so we can properly shift the characters
-            x-=97;
-            keyNum-=97;
-            if(encoding){ finalNum = x+keyNum; }
-            else{ finalNum = x-keyNum; }
-            finalNum%=26;
-            finalNum+=97;
-            // adds to the total
-            total += (char)finalNum;
-        }
-        return total;
-    }
-
-    //Miles
     //determines who the AI will attack in combat
     public static ArrayList<Player> computerAction(Monster m, ArrayList<Monster> monsters, ArrayList<Player> party){
         if (m.getHp() > 0){
@@ -430,7 +375,6 @@ public class MainAdventure {
                             if(((Knight)player).getIsTaunting()){
                                 if((int)(2*Math.random()) == 0){
                                     // taunt works
-                                    System.out.println("Successfully taunted!");
                                     randomPartyMember = iterations;
                                 }
                             }
@@ -449,6 +393,9 @@ public class MainAdventure {
                     }
                 }
                 System.out.println("\n" + m.getName() + " the " + m.getType() + " dealt " + damage + " damage to " + party.get(randomPartyMember).getName() + ".\n");
+                if (party.get(randomPartyMember).getIsDefending()){
+                    System.out.println("But some damage was defended.\n");
+                }
                 party.get(randomPartyMember).takeDmg(damage);
                 if(m.getType().equals("Dragon") || m.getType().equals("Goblin")){
                     if(4*Math.random() == 0){
@@ -458,6 +405,8 @@ public class MainAdventure {
                     }
                 }
             }
+        } else {
+            System.out.println("But they were unable to move!\n");
         }
         return party;
     }
@@ -482,7 +431,7 @@ public class MainAdventure {
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "hp");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "health");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -524,7 +473,7 @@ public class MainAdventure {
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "hp");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "health");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -569,7 +518,7 @@ public class MainAdventure {
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "hp");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "health");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -588,7 +537,7 @@ public class MainAdventure {
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "hp");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "health");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -626,7 +575,7 @@ public class MainAdventure {
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "hp");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "health");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -642,23 +591,31 @@ public class MainAdventure {
                         System.out.println(monsters.get(actionNumber).getName() + " the " + monsters.get(actionNumber).getType() + " took 2 damage!");
                         break;
                     } else if(actionNumber == 1){
-                        System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + "\n1 | " 
-                                                                                            + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(0).getHp() + "\n2 | "
-                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(0).getHp());
+                        System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + " health" + "\n1 | " 
+                                                                                            + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
+                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + "health");
                         actionNumber = kb.nextInt();
-                        if(actionNumber == 0){
-                            party.get(0).heal(p.healingPotion());
-                        } else if(actionNumber == 1){
-                            party.get(1).heal(p.healingPotion());
-                        } else if(actionNumber == 2){
-                            party.get(2).heal(p.healingPotion());
-                        } else {
-                            throw new InvalidMoveException();
+                        while (party.get(actionNumber).getHp() <= 0){
+                            System.out.println("You can't raise the dead. Try someone alive.");
+                            System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + " health" + "\n1 | " 
+                                                                                            + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
+                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + "health");
+                            
+                                actionNumber = kb.nextInt();
                         }
-                        System.out.println(party.get(actionNumber).getName() + " the " + party.get(actionNumber).getSubClass() + 
-                            " is now at " + party.get(actionNumber).getHp() + " health!");
-                        break;
+                    if(actionNumber == 0){
+                        party.get(0).heal(p.healingPotion());
+                    } else if(actionNumber == 1){
+                        party.get(1).heal(p.healingPotion());
                     } else if(actionNumber == 2){
+                        party.get(2).heal(p.healingPotion());
+                    } else {
+                        throw new InvalidMoveException();
+                    } 
+                    System.out.println(party.get(actionNumber).getName() + " the " + party.get(actionNumber).getSubClass() + 
+                        " is now at " + party.get(actionNumber).getHp() + " health!");
+                    break;
+                } else if(actionNumber == 2){
                         p.Defend();
                         break;
                     } else {
@@ -682,7 +639,7 @@ public class MainAdventure {
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "hp");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "health");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
@@ -698,10 +655,18 @@ public class MainAdventure {
                         System.out.println("Dealt " + player.getDmg() + " damage!");
                         break;
                     } else if(actionNumber == 1){
-                          System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + "\n1 | " 
-                                                                                            + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(0).getHp() + "\n2 | "
-                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(0).getHp());
+                          System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + " health\n1 | " 
+                                                                                            + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
+                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + " health");
                         actionNumber = kb.nextInt();
+                        while (party.get(actionNumber).getHp() <= 0){
+                            System.out.println("You can't raise the dead. Try someone alive.");
+                            System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + " health" + "\n1 | " 
+                                                                                            + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
+                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + "health");
+                            
+                                actionNumber = kb.nextInt();
+                        }
                         if(actionNumber == 0){
                             party.get(0).heal(p.healingSpell());
                         } else if(actionNumber == 1){
