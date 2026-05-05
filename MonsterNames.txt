@@ -78,7 +78,7 @@ WASD
 Octavius
 Landon
 Ethan
-Wasted
+Pong Krell
 College Tuition
 Chessmaster6000
 Decaf Coffee
@@ -96,5 +96,5 @@ Spider-Man
 Chicken Jockey
 Herobrine
 Jason Momoa
-;)
+;>
 Steve
