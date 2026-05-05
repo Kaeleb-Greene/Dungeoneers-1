@@ -431,7 +431,7 @@ public class MainAdventure {
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
                         int iterations = 0;
                         for(Monster monster : monsters){
-                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + "health");
+                            System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
                             iterations++;
                         }
                         actionNumber = kb.nextInt();
