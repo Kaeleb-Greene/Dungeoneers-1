@@ -22,7 +22,7 @@ public class MainAdventure {
         while (!gameLost){
             ArrayList<Monster> monsters = createLevel(dungeonLevel, kb);
             boolean levelCleared = false;
-            System.out.println("\nWelcome to Level " + dungeonLevel + "!\n");
+            System.out.println("\n\u001B[32mWelcome to Level " + dungeonLevel + "!\u001B[0m\n");
             ArrayList<Entity> entities = determineOrder(party, monsters, kb);
 
             while (!levelCleared && !gameLost){
