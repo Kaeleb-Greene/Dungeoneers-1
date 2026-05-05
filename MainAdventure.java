@@ -60,7 +60,7 @@ public class MainAdventure {
                         }
                         Player currentPlayer = (Player)person;
                         System.out.println("\n"+currentPlayer.getName() + " the " + currentPlayer.getSubClass() + "'s turn!");
-                        monsters = takeAction((Player) person, monsters, party, kb);
+                        monsters = takeAction((Player) person, monsters, party, kb, dungeonLevel);
                     }
                     if (party.get(0).getHp() <= 0 && party.get(1).getHp() <= 0 && party.get(2).getHp() <= 0){
                         gameLost = true;
@@ -413,7 +413,7 @@ public class MainAdventure {
 
     //Miles
     //prompts actions from a player based on that players subclass
-    public static ArrayList<Monster> takeAction(Player player, ArrayList<Monster> monsters, ArrayList<Player> party, Scanner kb){
+    public static ArrayList<Monster> takeAction(Player player, ArrayList<Monster> monsters, ArrayList<Player> party, Scanner kb, int dungeonLevel){
         if(player.getHp() <= 0){
             System.out.println("\nBut they were unresponsive...");
             return monsters;
@@ -425,7 +425,23 @@ public class MainAdventure {
 
             System.out.println("0 | Swing Sword\n1 | Taunt\n2 | Defend");
             while(true){
-                actionNumber = kb.nextInt();
+                try {
+                    actionNumber = kb.nextInt();
+                } catch (Exception e) {
+                    System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                    String save = party.get(0).getSubClass() + "\n"
+                                + party.get(0).getName() + "\n"
+                                + party.get(1).getSubClass() + "\n"
+                                + party.get(1).getName() + "\n"
+                                + party.get(2).getSubClass() + "\n"
+                                + party.get(2).getName() + "\n"
+                                + dungeonLevel;
+                    saveToBinaryFile(save);
+                    for(Player member : party){
+                        member.setHp(0);
+                    }
+                    break;
+                }
                 try{
                     if(actionNumber == 0){
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
@@ -434,7 +450,23 @@ public class MainAdventure {
                             System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
                             iterations++;
                         }
-                        actionNumber = kb.nextInt();
+                        try {
+                            actionNumber = kb.nextInt();
+                        } catch (Exception e) {
+                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            String save = party.get(0).getSubClass() + "\n"
+                                        + party.get(0).getName() + "\n"
+                                        + party.get(1).getSubClass() + "\n"
+                                        + party.get(1).getName() + "\n"
+                                        + party.get(2).getSubClass() + "\n"
+                                        + party.get(2).getName() + "\n"
+                                        + dungeonLevel;
+                            saveToBinaryFile(save);
+                            for(Player member : party){
+                                member.setHp(0);
+                            }
+                            break;
+                        }
                         if(actionNumber == 0){
                             monsters.get(0).takeDmg(p.swingSword());
                         } else if(actionNumber == 1){
@@ -469,7 +501,23 @@ public class MainAdventure {
             Rogue p = (Rogue) player;
             System.out.println("0 | Poison Dagger\n1 | Multi Attack\n2 | Defend");
             while(true){
-                actionNumber = kb.nextInt();
+                try {
+                    actionNumber = kb.nextInt();
+                } catch (Exception e) {
+                    System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                    String save = party.get(0).getSubClass() + "\n"
+                                + party.get(0).getName() + "\n"
+                                + party.get(1).getSubClass() + "\n"
+                                + party.get(1).getName() + "\n"
+                                + party.get(2).getSubClass() + "\n"
+                                + party.get(2).getName() + "\n"
+                                + dungeonLevel;
+                    saveToBinaryFile(save);
+                    for(Player member : party){
+                        member.setHp(0);
+                    }
+                    break;
+                }
                 try{
                     if(actionNumber == 0){
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
@@ -478,7 +526,23 @@ public class MainAdventure {
                             System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
                             iterations++;
                         }
-                        actionNumber = kb.nextInt();
+                        try {
+                            actionNumber = kb.nextInt();
+                        } catch (Exception e) {
+                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            String save = party.get(0).getSubClass() + "\n"
+                                        + party.get(0).getName() + "\n"
+                                        + party.get(1).getSubClass() + "\n"
+                                        + party.get(1).getName() + "\n"
+                                        + party.get(2).getSubClass() + "\n"
+                                        + party.get(2).getName() + "\n"
+                                        + dungeonLevel;
+                            saveToBinaryFile(save);
+                            for(Player member : party){
+                                member.setHp(0);
+                            }
+                            break;
+                        }
                         // POISON EFFECT?
                         if(actionNumber == 0){
                             monsters.get(0).takeDmg(p.poisonDagger(monsters.get(0)));
@@ -516,7 +580,23 @@ public class MainAdventure {
             Wizard p = (Wizard) player;
             System.out.println("0 | Fireball\n1 | Vegas Fireball\n2 | Defend");
             while(true){
-                actionNumber = kb.nextInt();
+                try {
+                    actionNumber = kb.nextInt();
+                } catch (Exception e) {
+                    System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                    String save = party.get(0).getSubClass() + "\n"
+                                + party.get(0).getName() + "\n"
+                                + party.get(1).getSubClass() + "\n"
+                                + party.get(1).getName() + "\n"
+                                + party.get(2).getSubClass() + "\n"
+                                + party.get(2).getName() + "\n"
+                                + dungeonLevel;
+                    saveToBinaryFile(save);
+                    for(Player member : party){
+                        member.setHp(0);
+                    }
+                    break;
+                }
                 try{
                     if(actionNumber == 0){
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
@@ -525,7 +605,23 @@ public class MainAdventure {
                             System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
                             iterations++;
                         }
-                        actionNumber = kb.nextInt();
+                        try {
+                            actionNumber = kb.nextInt();
+                        } catch (Exception e) {
+                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            String save = party.get(0).getSubClass() + "\n"
+                                        + party.get(0).getName() + "\n"
+                                        + party.get(1).getSubClass() + "\n"
+                                        + party.get(1).getName() + "\n"
+                                        + party.get(2).getSubClass() + "\n"
+                                        + party.get(2).getName() + "\n"
+                                        + dungeonLevel;
+                            saveToBinaryFile(save);
+                            for(Player member : party){
+                                member.setHp(0);
+                            }
+                            break;
+                        }
                         if(actionNumber == 0){
                             monsters.get(0).takeDmg(p.fireball());
                         } else if(actionNumber == 1){
@@ -544,7 +640,23 @@ public class MainAdventure {
                             System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
                             iterations++;
                         }
-                        actionNumber = kb.nextInt();
+                        try {
+                            actionNumber = kb.nextInt();
+                        } catch (Exception e) {
+                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            String save = party.get(0).getSubClass() + "\n"
+                                        + party.get(0).getName() + "\n"
+                                        + party.get(1).getSubClass() + "\n"
+                                        + party.get(1).getName() + "\n"
+                                        + party.get(2).getSubClass() + "\n"
+                                        + party.get(2).getName() + "\n"
+                                        + dungeonLevel;
+                            saveToBinaryFile(save);
+                            for(Player member : party){
+                                member.setHp(0);
+                            }
+                            break;
+                        }
                         if(actionNumber == 0){
                             monsters.get(0).takeDmg(p.vegasFireball());
                         } else if(actionNumber == 1){
@@ -575,7 +687,23 @@ public class MainAdventure {
             Alchemist p = (Alchemist) player;
             System.out.println("0 | Throw Potion\n1 | Healing Potion\n2 | Defend");
             while(true){
-                actionNumber = kb.nextInt();
+                try {
+                    actionNumber = kb.nextInt();
+                } catch (Exception e) {
+                    System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                    String save = party.get(0).getSubClass() + "\n"
+                                + party.get(0).getName() + "\n"
+                                + party.get(1).getSubClass() + "\n"
+                                + party.get(1).getName() + "\n"
+                                + party.get(2).getSubClass() + "\n"
+                                + party.get(2).getName() + "\n"
+                                + dungeonLevel;
+                    saveToBinaryFile(save);
+                    for(Player member : party){
+                        member.setHp(0);
+                    }
+                    break;
+                }
                 try{
                     if(actionNumber == 0){
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
@@ -584,7 +712,23 @@ public class MainAdventure {
                             System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
                             iterations++;
                         }
-                        actionNumber = kb.nextInt();
+                        try {
+                            actionNumber = kb.nextInt();
+                        } catch (Exception e) {
+                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            String save = party.get(0).getSubClass() + "\n"
+                                        + party.get(0).getName() + "\n"
+                                        + party.get(1).getSubClass() + "\n"
+                                        + party.get(1).getName() + "\n"
+                                        + party.get(2).getSubClass() + "\n"
+                                        + party.get(2).getName() + "\n"
+                                        + dungeonLevel;
+                            saveToBinaryFile(save);
+                            for(Player member : party){
+                                member.setHp(0);
+                            }
+                            break;
+                        }
                         if(actionNumber == 0){
                             monsters.get(0).takeDmg(p.throwPotion(monsters.get(0)));
                         } else if(actionNumber == 1){
@@ -599,7 +743,7 @@ public class MainAdventure {
                     } else if(actionNumber == 1){
                         System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + " health" + "\n1 | " 
                                                                                             + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
-                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + " health");
+                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + "health");
                         actionNumber = kb.nextInt();
                         while (party.get(actionNumber).getHp() <= 0){
                             System.out.println("You can't raise the dead. Try someone alive.");
@@ -607,7 +751,23 @@ public class MainAdventure {
                                                                                             + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
                                                                                             + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + " health");
                             
-                                actionNumber = kb.nextInt();
+                            try {
+                            actionNumber = kb.nextInt();
+                        } catch (Exception e) {
+                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            String save = party.get(0).getSubClass() + "\n"
+                                        + party.get(0).getName() + "\n"
+                                        + party.get(1).getSubClass() + "\n"
+                                        + party.get(1).getName() + "\n"
+                                        + party.get(2).getSubClass() + "\n"
+                                        + party.get(2).getName() + "\n"
+                                        + dungeonLevel;
+                            saveToBinaryFile(save);
+                            for(Player member : party){
+                                member.setHp(0);
+                            }
+                            return monsters;
+                        }
                         }
                     if(actionNumber == 0){
                         party.get(0).heal(p.healingPotion());
@@ -641,7 +801,23 @@ public class MainAdventure {
             Cleric p = (Cleric) player;
             System.out.println("0 | Swing Mace\n1 | Healing Spell\n2 | Defend");
             while(true){
-                actionNumber = kb.nextInt();
+                try {
+                    actionNumber = kb.nextInt();
+                } catch (Exception e) {
+                    System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                    String save = party.get(0).getSubClass() + "\n"
+                                + party.get(0).getName() + "\n"
+                                + party.get(1).getSubClass() + "\n"
+                                + party.get(1).getName() + "\n"
+                                + party.get(2).getSubClass() + "\n"
+                                + party.get(2).getName() + "\n"
+                                + dungeonLevel;
+                    saveToBinaryFile(save);
+                    for(Player member : party){
+                        member.setHp(0);
+                    }
+                    break;
+                }
                 try{
                     if(actionNumber == 0){
                         System.out.println("\n" + p.getName() + ", which enemy would you like to hit?");
@@ -650,7 +826,23 @@ public class MainAdventure {
                             System.out.println(iterations + " | " + monster.getName() + " the " + monster.getType() + ": " + monster.getHp() + " health");
                             iterations++;
                         }
-                        actionNumber = kb.nextInt();
+                        try {
+                            actionNumber = kb.nextInt();
+                        } catch (Exception e) {
+                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            String save = party.get(0).getSubClass() + "\n"
+                                        + party.get(0).getName() + "\n"
+                                        + party.get(1).getSubClass() + "\n"
+                                        + party.get(1).getName() + "\n"
+                                        + party.get(2).getSubClass() + "\n"
+                                        + party.get(2).getName() + "\n"
+                                        + dungeonLevel;
+                            saveToBinaryFile(save);
+                            for(Player member : party){
+                                member.setHp(0);
+                            }
+                            break;
+                        }
                         if(actionNumber == 0){
                             monsters.get(0).takeDmg(p.swingMace());
                         } else if(actionNumber == 1){
@@ -666,14 +858,46 @@ public class MainAdventure {
                           System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + " health\n1 | " 
                                                                                             + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
                                                                                             + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + " health");
-                        actionNumber = kb.nextInt();
+                        try {
+                            actionNumber = kb.nextInt();
+                        } catch (Exception e) {
+                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            String save = party.get(0).getSubClass() + "\n"
+                                        + party.get(0).getName() + "\n"
+                                        + party.get(1).getSubClass() + "\n"
+                                        + party.get(1).getName() + "\n"
+                                        + party.get(2).getSubClass() + "\n"
+                                        + party.get(2).getName() + "\n"
+                                        + dungeonLevel;
+                            saveToBinaryFile(save);
+                            for(Player member : party){
+                                member.setHp(0);
+                            }
+                            break;
+                        }
                         while (party.get(actionNumber).getHp() <= 0){
                             System.out.println("You can't raise the dead. Try someone alive.");
                             System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + " health" + "\n1 | " 
                                                                                             + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
                                                                                             + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + " health");
                             
+                           try {
                                 actionNumber = kb.nextInt();
+                            } catch (Exception e) {
+                                System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                                String save = party.get(0).getSubClass() + "\n"
+                                            + party.get(0).getName() + "\n"
+                                            + party.get(1).getSubClass() + "\n"
+                                            + party.get(1).getName() + "\n"
+                                            + party.get(2).getSubClass() + "\n"
+                                            + party.get(2).getName() + "\n"
+                                            + dungeonLevel;
+                                saveToBinaryFile(save);
+                                for(Player member : party){
+                                    member.setHp(0);
+                                }
+                                return monsters;
+                            }
                         }
                         if(actionNumber == 0){
                             party.get(0).heal(p.healingSpell());
@@ -798,4 +1022,3 @@ public class MainAdventure {
         return party;
     }
 }
-
