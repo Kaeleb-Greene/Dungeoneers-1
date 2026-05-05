@@ -593,13 +593,13 @@ public class MainAdventure {
                     } else if(actionNumber == 1){
                         System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + " health" + "\n1 | " 
                                                                                             + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
-                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + "health");
+                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + " health");
                         actionNumber = kb.nextInt();
                         while (party.get(actionNumber).getHp() <= 0){
                             System.out.println("You can't raise the dead. Try someone alive.");
                             System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + " health" + "\n1 | " 
                                                                                             + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
-                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + "health");
+                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + " health");
                             
                                 actionNumber = kb.nextInt();
                         }
@@ -663,7 +663,7 @@ public class MainAdventure {
                             System.out.println("You can't raise the dead. Try someone alive.");
                             System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + " health" + "\n1 | " 
                                                                                             + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
-                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + "health");
+                                                                                            + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + " health");
                             
                                 actionNumber = kb.nextInt();
                         }
