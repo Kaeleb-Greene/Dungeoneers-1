@@ -54,6 +54,7 @@ public abstract class Entity {
     public int poisonAttack(Entity e){
         //if poisoned = true; do 1 additional dmg every turn for the next 3 turns
         e.setIsPoisoned(true);
+        e.setPoisonTurnsLeft(5);
         return getDmg();
     }
 

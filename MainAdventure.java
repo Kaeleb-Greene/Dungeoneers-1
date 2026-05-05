@@ -103,7 +103,7 @@ public class MainAdventure {
                 
             entities = determineOrder(party, monsters, kb);
             if(levelCleared){
-                System.out.println("Would you like to save? (Y/N)");
+                System.out.println("Would you like to save and exit? (Y/N)");
                 String answer = kb.next();
                 if((answer.equals("yes") || answer.equals("Yes") || answer.equals("YES") || answer.equals("Y") || answer.equals("y"))){
                     // The player did not actually lose the game, but this breaks the loop. It will be reset when they load their save.
@@ -142,8 +142,8 @@ public class MainAdventure {
                     System.out.println("2 | Rogue: Sneak past your enemies! Poison an enemy with " +
                         "your dagger or quickly stab multiple in one turn! Least health!"); 
                     System.out.println("3 | Wizard: Roast your enemies with Fireballs! Vegas Fireball can do huge damage-- if you're lucky... Low health!");
-                    System.out.println("4 | Alchemist: Use potions to disable your opponents! " +
-                        "Poison them over time, weaken their attacks, or just damage them. Medium health");
+                    System.out.println("4 | Alchemist: Use potions to harm your opponents or heal your allies! " +
+                        "Poison them over time or just damage them. Medium health");
                     System.out.println("5 | Cleric: Bash enemies with your mace! Heal your allies! " +
                         "High health.");
                     int nextClassChoice = 0;
@@ -151,11 +151,11 @@ public class MainAdventure {
                         try {
                             nextClassChoice = kb.nextInt();
                             if(nextClassChoice > 5 || nextClassChoice < 1){
-                                System.out.println("Please input a valid number.");
+                                System.out.println("\u001B[33mPlease input a valid number.\u001B[0m");
                             }
                         } catch (Exception e) {
-                            System.out.println("Wow, attempting to make a fool of us by inputting a string rather than an int?");
-                            System.out.println("We will not be standing for this. Good luck surviving the dungeon now...");
+                            System.out.println("\u001B[33mWow, attempting to make a fool of us by inputting a string rather than an int?\u001B[0m");
+                            System.out.println("\u001B[33mWe will not be standing for this. Good luck surviving the dungeon now...\u001B[0m");
                             nextClassChoice = 6;
                             break;
                         }
@@ -398,10 +398,10 @@ public class MainAdventure {
                 }
                 party.get(randomPartyMember).takeDmg(damage);
                 if(m.getType().equals("Dragon") || m.getType().equals("Goblin")){
-                    if(4*Math.random() == 0){
+                    if((int)(4*Math.random()) == 0){
                         party.get(randomPartyMember).setIsPoisoned(true);
-                        party.get(randomPartyMember).setPoisonTurnsLeft(3);
-                        System.out.println(party.get(randomPartyMember) + " is poisoned for 3 turns!\n");
+                        party.get(randomPartyMember).setPoisonTurnsLeft(5);
+                        System.out.println(party.get(randomPartyMember) + " is poisoned for 4 turns!\n");
                     }
                 }
             }
@@ -428,7 +428,7 @@ public class MainAdventure {
                 try {
                     actionNumber = kb.nextInt();
                 } catch (Exception e) {
-                    System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                    System.out.println("\u001B[33mMan, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.\u001B[0m");
                     String save = party.get(0).getSubClass() + "\n"
                                 + party.get(0).getName() + "\n"
                                 + party.get(1).getSubClass() + "\n"
@@ -453,7 +453,7 @@ public class MainAdventure {
                         try {
                             actionNumber = kb.nextInt();
                         } catch (Exception e) {
-                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            System.out.println("\u001B[33mMan, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.\u001B[0m");
                             String save = party.get(0).getSubClass() + "\n"
                                         + party.get(0).getName() + "\n"
                                         + party.get(1).getSubClass() + "\n"
@@ -488,7 +488,7 @@ public class MainAdventure {
                         throw new InvalidMoveException();
                     }
                 }catch(InvalidMoveException ime){
-                    System.out.println("Please input a valid number");
+                    System.out.println("\u001B[33mPlease input a valid number\u001B[0m");
                     System.out.println("\nWhat action would you like to do?");
                     System.out.println("0 | Swing Sword\n1 | Taunt\n2 | Defend");
                 }catch(Exception e){
@@ -504,7 +504,7 @@ public class MainAdventure {
                 try {
                     actionNumber = kb.nextInt();
                 } catch (Exception e) {
-                    System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                    System.out.println("\u001B[33mMan, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.\u001B[0m");
                     String save = party.get(0).getSubClass() + "\n"
                                 + party.get(0).getName() + "\n"
                                 + party.get(1).getSubClass() + "\n"
@@ -529,7 +529,7 @@ public class MainAdventure {
                         try {
                             actionNumber = kb.nextInt();
                         } catch (Exception e) {
-                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            System.out.println("\u001B[33mMan, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.\u001B[0m");
                             String save = party.get(0).getSubClass() + "\n"
                                         + party.get(0).getName() + "\n"
                                         + party.get(1).getSubClass() + "\n"
@@ -567,12 +567,12 @@ public class MainAdventure {
                         throw new InvalidMoveException();
                     }
                 }catch(InvalidMoveException ime){
-                    System.out.println("Please input a valid number");
+                    System.out.println("\u001B[33mPlease input a valid number.\u001B[0m");
                     System.out.println("\nWhat action would you like to do?");
                     System.out.println("0 | Poison Dagger\n1 | Multi Attack\n2 | Defend");
                 }catch(Exception e){
                     System.out.println(e.getMessage());
-                    System.out.println("\nWhat action would you like to do?");
+                    System.out.println("\n\u001B[33mWhat action would you like to do?\u001B[0m");
                     System.out.println("0 | Poison Dagger\n1 | Multi Attack\n2 | Defend");
                 }
             }
@@ -583,7 +583,7 @@ public class MainAdventure {
                 try {
                     actionNumber = kb.nextInt();
                 } catch (Exception e) {
-                    System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                    System.out.println("\u001B[33mMan, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.\u001B[0m");
                     String save = party.get(0).getSubClass() + "\n"
                                 + party.get(0).getName() + "\n"
                                 + party.get(1).getSubClass() + "\n"
@@ -608,7 +608,7 @@ public class MainAdventure {
                         try {
                             actionNumber = kb.nextInt();
                         } catch (Exception e) {
-                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            System.out.println("\u001B[33mMan, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.\u001B[0m");
                             String save = party.get(0).getSubClass() + "\n"
                                         + party.get(0).getName() + "\n"
                                         + party.get(1).getSubClass() + "\n"
@@ -643,7 +643,7 @@ public class MainAdventure {
                         try {
                             actionNumber = kb.nextInt();
                         } catch (Exception e) {
-                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            System.out.println("\u001B[33mMan, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.\u001B[0m");
                             String save = party.get(0).getSubClass() + "\n"
                                         + party.get(0).getName() + "\n"
                                         + party.get(1).getSubClass() + "\n"
@@ -674,7 +674,7 @@ public class MainAdventure {
                         throw new InvalidMoveException();
                     }
                 }catch(InvalidMoveException ime){
-                    System.out.println("Please input a valid number");
+                    System.out.println("\u001B[33mPlease input a valid number.\u001B[0m");
                     System.out.println("\nWhat action would you like to do?");
                     System.out.println("0 | Fireball\n1 | Vegas Fireball\n2 | Defend");
                 }catch(Exception e){
@@ -690,7 +690,7 @@ public class MainAdventure {
                 try {
                     actionNumber = kb.nextInt();
                 } catch (Exception e) {
-                    System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                    System.out.println("\u001B[33mMan, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.\u001B[0m");
                     String save = party.get(0).getSubClass() + "\n"
                                 + party.get(0).getName() + "\n"
                                 + party.get(1).getSubClass() + "\n"
@@ -715,7 +715,7 @@ public class MainAdventure {
                         try {
                             actionNumber = kb.nextInt();
                         } catch (Exception e) {
-                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            System.out.println("\u001B[33mMan, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.\u001B[0m");
                             String save = party.get(0).getSubClass() + "\n"
                                         + party.get(0).getName() + "\n"
                                         + party.get(1).getSubClass() + "\n"
@@ -746,7 +746,7 @@ public class MainAdventure {
                                                                                             + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + "health");
                         actionNumber = kb.nextInt();
                         while (party.get(actionNumber).getHp() <= 0){
-                            System.out.println("You can't raise the dead. Try someone alive.");
+                            System.out.println("\u001B[33mYou can't raise the dead. Try someone alive.\u001B[0m");
                             System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + " health" + "\n1 | " 
                                                                                             + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
                                                                                             + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + " health");
@@ -754,7 +754,7 @@ public class MainAdventure {
                             try {
                             actionNumber = kb.nextInt();
                         } catch (Exception e) {
-                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            System.out.println("\u001B[33mMan, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.\u001B[0m");
                             String save = party.get(0).getSubClass() + "\n"
                                         + party.get(0).getName() + "\n"
                                         + party.get(1).getSubClass() + "\n"
@@ -788,7 +788,7 @@ public class MainAdventure {
                         throw new InvalidMoveException();
                     }
                 }catch(InvalidMoveException ime){
-                    System.out.println("Please input a valid number");
+                    System.out.println("\u001B[33mPlease input a valid number.\u001B[0m");
                     System.out.println("\nWhat action would you like to do?");
                     System.out.println("0 | Throw Potion\n1 | Healing Potion\n2 | Defend");
                 }catch(Exception e){
@@ -804,7 +804,7 @@ public class MainAdventure {
                 try {
                     actionNumber = kb.nextInt();
                 } catch (Exception e) {
-                    System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                    System.out.println("\u001B[33mMan, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.\u001B[0m");
                     String save = party.get(0).getSubClass() + "\n"
                                 + party.get(0).getName() + "\n"
                                 + party.get(1).getSubClass() + "\n"
@@ -829,7 +829,7 @@ public class MainAdventure {
                         try {
                             actionNumber = kb.nextInt();
                         } catch (Exception e) {
-                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            System.out.println("\u001B[33mMan, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.\u001B[0m");
                             String save = party.get(0).getSubClass() + "\n"
                                         + party.get(0).getName() + "\n"
                                         + party.get(1).getSubClass() + "\n"
@@ -861,7 +861,7 @@ public class MainAdventure {
                         try {
                             actionNumber = kb.nextInt();
                         } catch (Exception e) {
-                            System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                            System.out.println("\u001B[33mMan, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.\u001B[0m");
                             String save = party.get(0).getSubClass() + "\n"
                                         + party.get(0).getName() + "\n"
                                         + party.get(1).getSubClass() + "\n"
@@ -876,7 +876,7 @@ public class MainAdventure {
                             break;
                         }
                         while (party.get(actionNumber).getHp() <= 0){
-                            System.out.println("You can't raise the dead. Try someone alive.");
+                            System.out.println("\u001B[33mYou can't raise the dead. Try someone alive.\u001B[0m");
                             System.out.println("\nWhich character would you like to heal?\n0 | " + party.get(0).getName() + " the " + party.get(0).getSubClass() + ": " + party.get(0).getHp() + " health" + "\n1 | " 
                                                                                             + party.get(1).getName() + " the " + party.get(1).getSubClass() + ": " + party.get(1).getHp() + " health\n2 | "
                                                                                             + party.get(2).getName() + " the " + party.get(2).getSubClass() + ": " + party.get(2).getHp() + " health");
@@ -884,7 +884,7 @@ public class MainAdventure {
                            try {
                                 actionNumber = kb.nextInt();
                             } catch (Exception e) {
-                                System.out.println("Man, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.");
+                                System.out.println("\u001B[33mMan, inputting a string? That's kinda lame. You die now. But we're nice enough to save your game.\u001B[0m");
                                 String save = party.get(0).getSubClass() + "\n"
                                             + party.get(0).getName() + "\n"
                                             + party.get(1).getSubClass() + "\n"
@@ -918,7 +918,7 @@ public class MainAdventure {
                         throw new InvalidMoveException();
                     }
                 }catch(InvalidMoveException ime){
-                    System.out.println("Please input a valid move.");
+                    System.out.println("\u001B[33mPlease input a valid move.\u001B[0m");
                     System.out.println("\nWhat action would you like to do?");
                     System.out.println("0 | Swing Mace\n1 | Healing Spell\n2 | Defend");
                 }catch(Exception e){
@@ -967,6 +967,9 @@ public class MainAdventure {
             if (Entity.getHp() <= 0){
                 System.out.println(Entity.getName() + " died to the poison!\n");
             }
+            if (Entity.getPoisonTurnsLeft() <= 0){
+                Entity.setIsPoisoned(false);
+            }
         }
     } 
     public static void saveToBinaryFile(String text){
@@ -975,7 +978,7 @@ public class MainAdventure {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(text);
             oos.close();
-            System.out.println("\nBinary File successfully written\n");
+            System.out.println("\n\u001B[32mBinary File successfully written\u001B[0m\n");
         } catch (FileNotFoundException fnfe){
             System.out.println(fnfe.getMessage());
         } catch (IOException ioe){
@@ -1005,7 +1008,7 @@ public class MainAdventure {
                         party.add(new Cleric(thisName));
                     }
                 }
-                System.out.println("Save file successfully read.");
+                System.out.println("\u001B[32mSave file successfully read.\u001B[0m");
                 int floor = typeScan.nextInt();
                 party.get(0).setFloor(floor);
             } catch (Exception e){
