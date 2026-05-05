@@ -15,7 +15,6 @@ public class Alchemist extends Player {
             System.out.println("\nA poison potion has been thrown!");
             System.out.println("The enemy has been poisoned!\n");
             return poisonAttack(e);
-        
         }
     }
 
