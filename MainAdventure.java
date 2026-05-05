@@ -461,6 +461,8 @@ public class MainAdventure {
                     System.out.println("0 | Swing Sword\n1 | Taunt\n2 | Defend");
                 }catch(Exception e){
                     System.out.println(e.getMessage());
+                    System.out.println("\nWhat action would you like to do?");
+                    System.out.println("0 | Swing Sword\n1 | Taunt\n2 | Defend");
                 }
             }
         } else if(player.getSubClass().equals("Rogue")){
@@ -506,6 +508,8 @@ public class MainAdventure {
                     System.out.println("0 | Poison Dagger\n1 | Multi Attack\n2 | Defend");
                 }catch(Exception e){
                     System.out.println(e.getMessage());
+                    System.out.println("\nWhat action would you like to do?");
+                    System.out.println("0 | Poison Dagger\n1 | Multi Attack\n2 | Defend");
                 }
             }
         } else if(player.getSubClass().equals("Wizard")){
@@ -563,6 +567,8 @@ public class MainAdventure {
                     System.out.println("0 | Fireball\n1 | Vegas Fireball\n2 | Defend");
                 }catch(Exception e){
                     System.out.println(e.getMessage());
+                    System.out.println("\nWhat action would you like to do?");
+                    System.out.println("0 | Fireball\n1 | Vegas Fireball\n2 | Defend");
                 }
             }
         } else if(player.getSubClass().equals("Alchemist")){
@@ -627,6 +633,8 @@ public class MainAdventure {
                     System.out.println("0 | Throw Potion\n1 | Healing Potion\n2 | Defend");
                 }catch(Exception e){
                     System.out.println(e.getMessage());
+                    System.out.println("\nWhat action would you like to do?");
+                    System.out.println("0 | Throw Potion\n1 | Healing Potion\n2 | Defend");
                 }
             }
         } else {
@@ -691,6 +699,8 @@ public class MainAdventure {
                     System.out.println("0 | Swing Mace\n1 | Healing Spell\n2 | Defend");
                 }catch(Exception e){
                     System.out.println(e.getMessage());
+                    System.out.println("\nWhat action would you like to do?");
+                    System.out.println("0 | Swing Mace\n1 | Healing Spell\n2 | Defend");
                 }
             }
         }
